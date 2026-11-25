@@ -1,0 +1,48 @@
+# 비밀값 (예시 파일은 커밋)
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+**/env.json
+!**/env.example.json
+*.pem
+*.key
+*.keystore
+*.jks
+secrets/
+credentials*.json
+service-account*.json
+
+# Claude 개인 설정
+.claude/settings.local.json
+
+# OS / 에디터
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Node
+node_modules/
+.next/
+dist/
+build/
+coverage/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# 로그
+*.log
