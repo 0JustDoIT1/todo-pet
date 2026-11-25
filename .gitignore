@@ -43,6 +43,9 @@ __pycache__/
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
+.pub-cache/
+.pub/
+*.iml
 
 # 로그
 *.log
