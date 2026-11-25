@@ -9,20 +9,20 @@
 
 | 분류 | 항목 | 결정 |
 | --- | --- | --- |
-| 플랫폼 | 대상 플랫폼·기기 | 모바일 앱, Android/iOS 출시 범위 미정 |
+| 플랫폼 | 대상 플랫폼·기기 | 모바일 앱. Phase 1 개발·검증은 Android, ios/ 폴더는 생성만(빌드는 Mac 필요). 패키지명 `com.justdoit.todopet` (변경 금지) |
 | 플랫폼 | 개발 OS / 셸 | Windows / PowerShell |
-| 스택 | 언어·프레임워크 (버전까지) | Dart / Flutter, 버전 미정 |
-| 스택 | 패키지 매니저 | 미정 |
+| 스택 | 언어·프레임워크 (버전까지) | Flutter 3.44.8 (stable) / Dart 3.12.2 |
+| 스택 | 패키지 매니저 | pub (`flutter pub`) |
 | 구조 | 렌더링 방식 / 앱 구조 | 미정 |
 | 구조 | 상태관리 | Riverpod |
 | 구조 | API 방식 | 미정 |
-| 구조 | 디렉터리 규칙 | 미정 |
+| 구조 | 디렉터리 규칙 | 기능별: `lib/features/<기능>/{domain,data,ui}`, 공통 `lib/core/`. domain은 Flutter 의존 없는 순수 Dart |
 | 데이터 | DB / ORM / 마이그레이션 도구 | 로컬 SQLite / Drift |
 | 데이터 | 시드·데이터 입력 방식 | 미정 |
 | 인증 | 방식과 권한 모델 | Phase 1 없음, Phase 3.5~4 소셜 로그인·클라우드 백업 |
 | 외부 서비스 | 사용 서비스와 월 비용 상한 | Phase 1 앱 런타임 외부 서비스 없음 (에셋 생성은 개발자가 AI 이미지 도구로 수동 작업) |
 | 품질 | 테스트 수준 (L0~L3) | L1 |
-| 품질 | 린터 / 포매터 | 미정 |
+| 품질 | 린터 / 포매터 | flutter_lints 6 (템플릿 기본) / `dart format` |
 | 코드 규칙 | 에러 처리 / 로깅 / 주석 언어 | 미정 |
 | Git | 브랜치 전략 / 커밋 형식 | main + feature/*, Conventional Commits |
 | 배포 | 환경 구분 / CI / 배포 대상 | 미정 |
@@ -48,3 +48,4 @@
 - 2026-11-25 | PRD v0.2: 템플릿 구조 재정리, 포인트·펫 상태 초기 규칙 추가 (이번만 Claude 직접 수정 허용, 차단 원복) | 기획 검수 | docs/PRD.md
 - 2026-11-25 | 모듈 db·mobile 적용, llm·game-mod 파일 삭제, 개발 OS Windows/PowerShell 확정 | 구조 정리 | CLAUDE.md, docs/modules/, .env.example
 - 2026-11-25 | PRD v0.3 e2e 재검토: 체크리스트는 전체 완료 시만 지급, 시작 종 추가 입양 허용(상점 탭 유지), 기분은 표정에만 연결, 종·먹이·카테고리는 코드 상수, 날짜 넘김은 앱 열 때 일괄 처리, 취소 차감은 지급 당시 금액·완료된 할일 수정 불가·오늘/이월만 완료·배고픔 100이면 구매 불가·최저 먹이 5P 이하 | 과설계 제거·누락 보완 | docs/PRD.md(사용자가 직접 복사해 반영), CLAUDE.md, docs/ART_PROMPTS.md
+- 2026-11-25 | Flutter 프로젝트 생성: Flutter 3.44.8 고정, 패키지명 com.justdoit.todopet, Dart 패키지 todo_pet, Android 먼저(ios/ 생성만), 기능별 폴더, flutter_lints | 사용자 선택 | docs/decisions.md, CLAUDE.md, pubspec.yaml

@@ -93,21 +93,25 @@
 
 ## 실행 환경
 - 개발 OS / 셸: Windows / PowerShell
-- 설치: 미정 (Flutter 프로젝트 미생성)
-- 실행: 미정 (Flutter 프로젝트 미생성)
-- 테스트: 미정 (Flutter 프로젝트 미생성)
-- 린트 / 포맷: 미정 (Flutter 프로젝트 미생성)
-- 빌드: 미정 (Flutter 프로젝트 미생성)
+- Flutter 3.44.8 / Dart 3.12.2 (다른 버전으로 올리지 않는다)
+- 설치: `flutter pub get`
+- 실행: `flutter run` (Android 에뮬레이터·기기)
+- 테스트: `flutter test`
+- 린트 / 포맷: `flutter analyze` / `dart format .`
+- 빌드: `flutter build apk --debug` (iOS는 이 환경에서 확인 불가)
 - 환경변수: `.env.example` 참고
 
 ## 구조
 ```text
-docs/: 기획(PRD)·결정 기록·그림 프롬프트(ART_PROMPTS.md)·모듈 규칙
+lib/core/: 공통 (DB, 날짜, 테마)
+lib/features/<todo|points|pet|shop|onboarding|settings>/{domain,data,ui}: 기능별 코드. domain은 순수 Dart
+test/: lib 구조를 따라간다
+android/, ios/: 플랫폼 폴더 (패키지명 com.justdoit.todopet)
 assets/pets/<species>/stage<N>.png: 펫 표정 시트 256×64 (예정)
 assets/food/<id>.png: 먹이 아이콘 32×32 (예정)
+docs/: 기획(PRD)·결정 기록·그림 프롬프트(ART_PROMPTS.md)·모듈 규칙
 ASSETS.md: 에셋 출처·라이선스
 .claude/: 개발 명령 템플릿·권한 설정
-앱 소스 디렉터리: Flutter 프로젝트 생성 시 확정
 ```
 
 ## 불변식
