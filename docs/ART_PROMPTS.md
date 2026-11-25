@@ -1,86 +1,131 @@
-# 펫·먹이 그림 프롬프트 (PRD 3.3)
+# 펫·먹이·앱 아이콘 그림 프롬프트 (PRD 3.5)
 
-펫과 먹이 그림을 개발할 때 AI 이미지 생성으로 만들기 위한 규칙과 프롬프트. 앱은 실행 중에 AI를 호출하지 않는다. 출처 기록은 [ASSETS.md](../ASSETS.md).
+개발할 때 AI 이미지 생성으로 그림을 만들기 위한 프롬프트와 규칙. 앱은 실행 중에 AI를 호출하지 않는다. 출처 기록은 [ASSETS.md](../ASSETS.md).
+
+## 0. 만드는 방법 (사용자)
+
+1. 아래 2~4장의 프롬프트를 **그대로** 이미지 생성 도구(ChatGPT 이미지 생성 등)에 붙여넣는다. 프롬프트 하나에 그림 하나.
+2. **2단계 펫은 1단계 그림을 참고 이미지로 함께 올리고** 생성한다. 그래야 같은 캐릭터로 나온다.
+3. 생성 도구가 주는 크기 그대로(예: 1536×1024, 1024×1024) PNG로 저장한다. 줄이거나 자르지 않는다.
+4. 파일 이름은 각 항목 제목의 `원본 파일 이름`으로 하고, 한 폴더에 모아 경로를 알려 준다.
+5. 마음에 안 드는 그림은 다시 생성해도 된다. 생김새 문장(`The pet:` 뒷부분)은 바꿔도 된다.
+
+Claude가 하는 일: 투명 배경 정리 → 칸 나누기 → nearest-neighbor로 규격 크기 축소 → `assets/`에 넣기 → 앱을 이모지에서 그림으로 전환 → `ASSETS.md` 기록.
 
 ## 1. 규칙
-- **저장 위치·이름**: 펫은 `assets/pets/<species>/stage<N>.png`(예: `assets/pets/cat/stage1.png`), 먹이는 `assets/food/<id>.png`. `<species>`·`<id>`는 영문 소문자와 `-`만 쓴다.
-- **규격 (앱에 넣기 전에 맞춤)**
-  - 펫: 1행 × 4칸 = **256×64**, 칸마다 64×64. 칸 순서는 `기본 | 눈 감음 | 기쁨 | 배고픔`.
-  - 먹이: 한 장 **32×32**.
-  - 배경은 투명. 생성 도구가 큰 그림을 주면 nearest-neighbor로 줄이고, 가장자리 반투명 픽셀을 정리한다.
-- **한 장으로 생성**: 네 칸을 한 이미지로 만들어야 같은 캐릭터로 나온다. 격자가 잘 안 나오면 같은 스타일 블록으로 칸마다 따로 만든 뒤 합친다.
-- **같은 종의 단계끼리 맞추기**: 2단계를 만들 때 1단계 그림을 참고 이미지로 함께 넣고 "same species, slightly bigger and more mature"로 지시한다.
-- **표정 칸 선택 (앱)**: 배고픔 30 이하 → 배고픔 칸, 기분 70 이상 → 기쁨 칸, 그 외 → 기본 칸(눈 감음과 교대).
-- **움직임은 그리지 않는다**: 흔들림·점프는 코드로 만든다. 걷기·이동 프레임은 만들지 않는다.
-- **특정 작품 캐릭터 금지**: 기존 게임·애니메이션 펫의 고유한 생김새를 따라 하지 않는다. 일반적인 동물·생물 유형으로만 그린다.
-- **기록**: 그림을 넣으면 도구·생성일·보정 내용을 `ASSETS.md`에 적고, 아래 체크박스를 채운다.
-- **앱 표시**: Flutter에서 `FilterQuality.none`으로 그린다(픽셀이 흐려지지 않게).
 
-### 스타일 블록 (모든 프롬프트 앞에 붙임)
+- **저장 위치(앱 안)**: 펫 `assets/pets/<species>/stage<N>.png`, 먹이 `assets/food/<id>.png`, 앱 아이콘 `assets/icon/app_icon.png`.
+- **최종 규격 (Claude가 맞춤)**
+  - 펫: 1행 × 4칸 = **256×64**, 칸마다 64×64. 칸 순서 `기본 | 눈 감음 | 기쁨 | 배고픔`.
+  - 먹이: **32×32**.
+  - 앱 아이콘: **1024×1024**, 배경 채움(투명 아님).
+  - 펫·먹이 배경은 투명.
+- **움직임은 그리지 않는다**: 흔들림·점프는 코드로 만든다. 걷기 프레임은 만들지 않는다.
+- **특정 작품 캐릭터 금지**: 기존 게임·애니메이션의 고유한 생김새를 따라 하지 않는다.
+- **앱 표시**: Flutter에서 `FilterQuality.none`으로 그린다(픽셀이 흐려지지 않게).
+- **표정 칸 선택 (앱)**: 배고픔 30 이하 → 배고픔 칸, 기분 70 이상 → 기쁨 칸, 그 외 → 기본 칸(눈 감음과 교대). 탭하면 기쁨 칸 + 점프.
+
+## 2. 펫 6장 (고양이·강아지·토끼 × 1·2단계)
+
+### [ ] 고양이 1단계 — 원본 파일 이름 `cat_stage1.png`
 ```
-Cute pixel art virtual pet, 16-bit style, chibi round body, front view facing the viewer,
+Cute pixel art virtual pet sprite sheet, 16-bit style, chibi round body, front view facing the viewer,
 clean dark outline, limited palette (about 16 colors), soft shading, readable at 64x64 pixels,
 fully transparent background, no ground shadow, no text, no logos, no watermark.
-```
-
-### 펫 시트 지시문
-```
-Sprite sheet: 1 row x 4 columns, every cell the same square size, the pet centered in each cell at the same position and scale.
-Cells from left: neutral idle, eyes closed (blink), happy (smiling, eyes curved), hungry (droopy, small sweat drop).
+Wide image with exactly 4 equal square cells in a single row, the pet centered in each cell at the same position and the same size.
+Cells from left to right: 1) neutral idle, 2) eyes closed (blink), 3) happy (smiling, eyes curved), 4) hungry (droopy ears, small sweat drop).
 The same character in every cell; only the face and posture change.
+The pet: a tiny round baby kitten, orange tabby with a cream belly, big eyes, short stubby tail.
 ```
 
-## 2. 시작 펫 3종 (2026-11-25 결정: 고양이·강아지·토끼)
-종 id는 코드 상수(`lib/features/pet/domain/species.dart`)와 같다. 각 프롬프트 앞에 스타일 블록과 펫 시트 지시문을 붙인다. 2단계는 1단계 그림을 참고 이미지로 함께 넣는다. 생김새 문장은 초안이라 바꿔도 된다.
-
-### [ ] 고양이 1단계 → `assets/pets/cat/stage1.png` (256×64)
+### [ ] 고양이 2단계 — 원본 파일 이름 `cat_stage2.png` (1단계 그림을 참고 이미지로 함께 올림)
 ```
-Stage 1 (baby): a tiny round kitten, orange tabby with a cream belly, big eyes, short stubby tail.
-```
-
-### [ ] 고양이 2단계 → `assets/pets/cat/stage2.png` (256×64)
-```
-Stage 2 (child): same kitten as the reference image, slightly bigger and more mature, longer tail, small bell collar.
+Cute pixel art virtual pet sprite sheet, 16-bit style, chibi round body, front view facing the viewer,
+clean dark outline, limited palette (about 16 colors), soft shading, readable at 64x64 pixels,
+fully transparent background, no ground shadow, no text, no logos, no watermark.
+Wide image with exactly 4 equal square cells in a single row, the pet centered in each cell at the same position and the same size.
+Cells from left to right: 1) neutral idle, 2) eyes closed (blink), 3) happy (smiling, eyes curved), 4) hungry (droopy ears, small sweat drop).
+The same character in every cell; only the face and posture change.
+The pet: the same kitten as the reference image, grown a little bigger and more mature, longer tail, small golden bell collar. Keep the same colors and face.
 ```
 
-### [ ] 강아지 1단계 → `assets/pets/dog/stage1.png` (256×64)
+### [ ] 강아지 1단계 — 원본 파일 이름 `dog_stage1.png`
 ```
-Stage 1 (baby): a tiny round puppy, light brown with one darker ear patch, floppy ears, big eyes.
-```
-
-### [ ] 강아지 2단계 → `assets/pets/dog/stage2.png` (256×64)
-```
-Stage 2 (child): same puppy as the reference image, slightly bigger and more mature, wagging tail, red scarf.
-```
-
-### [ ] 토끼 1단계 → `assets/pets/rabbit/stage1.png` (256×64)
-```
-Stage 1 (baby): a tiny round bunny, white with pink inner ears, short ears, fluffy tail.
+Cute pixel art virtual pet sprite sheet, 16-bit style, chibi round body, front view facing the viewer,
+clean dark outline, limited palette (about 16 colors), soft shading, readable at 64x64 pixels,
+fully transparent background, no ground shadow, no text, no logos, no watermark.
+Wide image with exactly 4 equal square cells in a single row, the pet centered in each cell at the same position and the same size.
+Cells from left to right: 1) neutral idle, 2) eyes closed (blink), 3) happy (smiling, eyes curved), 4) hungry (droopy ears, small sweat drop).
+The same character in every cell; only the face and posture change.
+The pet: a tiny round baby puppy, light brown fur with one darker brown ear, floppy ears, big eyes.
 ```
 
-### [ ] 토끼 2단계 → `assets/pets/rabbit/stage2.png` (256×64)
+### [ ] 강아지 2단계 — 원본 파일 이름 `dog_stage2.png` (1단계 그림을 참고 이미지로 함께 올림)
 ```
-Stage 2 (child): same bunny as the reference image, slightly bigger and more mature, long upright ears, small flower on one ear.
-```
-
-## 3. 먹이 아이콘 3종 (기획서 3.5)
-먹이 id는 코드 상수(`lib/features/pet/domain/foods.dart`)와 같다. 각 프롬프트 앞에 아래 블록을 붙인다.
-```
-Pixel art food item icon, 16-bit style, clean dark outline, limited palette, centered,
-fully transparent background, no text, no logos, no watermark.
-```
-
-### [ ] 기본 사료 → `assets/food/basic.png` (32×32)
-```
-Item: a small bowl of round pet kibble.
+Cute pixel art virtual pet sprite sheet, 16-bit style, chibi round body, front view facing the viewer,
+clean dark outline, limited palette (about 16 colors), soft shading, readable at 64x64 pixels,
+fully transparent background, no ground shadow, no text, no logos, no watermark.
+Wide image with exactly 4 equal square cells in a single row, the pet centered in each cell at the same position and the same size.
+Cells from left to right: 1) neutral idle, 2) eyes closed (blink), 3) happy (smiling, eyes curved), 4) hungry (droopy ears, small sweat drop).
+The same character in every cell; only the face and posture change.
+The pet: the same puppy as the reference image, grown a little bigger and more mature, wagging tail, small red scarf. Keep the same colors and face.
 ```
 
-### [ ] 간식 → `assets/food/snack.png` (32×32)
+### [ ] 토끼 1단계 — 원본 파일 이름 `rabbit_stage1.png`
 ```
+Cute pixel art virtual pet sprite sheet, 16-bit style, chibi round body, front view facing the viewer,
+clean dark outline, limited palette (about 16 colors), soft shading, readable at 64x64 pixels,
+fully transparent background, no ground shadow, no text, no logos, no watermark.
+Wide image with exactly 4 equal square cells in a single row, the pet centered in each cell at the same position and the same size.
+Cells from left to right: 1) neutral idle, 2) eyes closed (blink), 3) happy (smiling, eyes curved), 4) hungry (droopy ears, small sweat drop).
+The same character in every cell; only the face and posture change.
+The pet: a tiny round baby bunny, white fur with pink inner ears, short ears, fluffy round tail.
+```
+
+### [ ] 토끼 2단계 — 원본 파일 이름 `rabbit_stage2.png` (1단계 그림을 참고 이미지로 함께 올림)
+```
+Cute pixel art virtual pet sprite sheet, 16-bit style, chibi round body, front view facing the viewer,
+clean dark outline, limited palette (about 16 colors), soft shading, readable at 64x64 pixels,
+fully transparent background, no ground shadow, no text, no logos, no watermark.
+Wide image with exactly 4 equal square cells in a single row, the pet centered in each cell at the same position and the same size.
+Cells from left to right: 1) neutral idle, 2) eyes closed (blink), 3) happy (smiling, eyes curved), 4) hungry (droopy ears, small sweat drop).
+The same character in every cell; only the face and posture change.
+The pet: the same bunny as the reference image, grown a little bigger and more mature, long upright ears, a small flower on one ear. Keep the same colors and face.
+```
+
+**격자가 잘 안 나올 때**: 마지막 줄(`The pet:`)은 그대로 두고, 4칸 대신 한 칸씩 4번 생성해도 된다. 그때는 둘째 줄부터 셋째 줄을 `Single pet, centered, square image, expression: <neutral idle / eyes closed / happy / hungry>.`로 바꾸고, 원본 파일 이름 뒤에 `_1`~`_4`를 붙인다(예: `cat_stage1_1.png`).
+
+## 3. 먹이 아이콘 3장
+
+### [ ] 기본 사료 — 원본 파일 이름 `food_basic.png`
+```
+Pixel art food item icon, 16-bit style, clean dark outline, limited palette, single item centered, square image,
+readable at 32x32 pixels, fully transparent background, no text, no logos, no watermark.
+Item: a small bowl of round brown pet kibble.
+```
+
+### [ ] 간식 — 원본 파일 이름 `food_snack.png`
+```
+Pixel art food item icon, 16-bit style, clean dark outline, limited palette, single item centered, square image,
+readable at 32x32 pixels, fully transparent background, no text, no logos, no watermark.
 Item: a bone-shaped cookie treat.
 ```
 
-### [ ] 특별식 → `assets/food/special.png` (32×32)
+### [ ] 특별식 — 원본 파일 이름 `food_special.png`
 ```
-Item: a festive plate with a small cake and a star sparkle.
+Pixel art food item icon, 16-bit style, clean dark outline, limited palette, single item centered, square image,
+readable at 32x32 pixels, fully transparent background, no text, no logos, no watermark.
+Item: a festive plate with a small strawberry cake and a little star sparkle.
+```
+
+## 4. 앱 아이콘 1장
+
+펫 1단계 그림을 모두 만든 뒤에 만든다. 고양이 1단계 그림을 참고 이미지로 함께 올린다(다른 종으로 바꿔도 된다).
+
+### [ ] 앱 아이콘 — 원본 파일 이름 `app_icon.png`
+```
+App icon, 1024x1024, square, pixel art 16-bit style, clean dark outline, limited palette.
+The kitten from the reference image, only its head and front paws, peeking up from behind a large white checkmark.
+Solid warm orange background filling the whole square (not transparent), the character centered and filling about 60% of the icon,
+simple and readable at small sizes, no text, no letters, no logos, no watermark, no rounded corners.
 ```
