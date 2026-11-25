@@ -29,6 +29,10 @@ class PointService {
     return row.read(sum) ?? 0;
   }
 
+  /// 포인트 이력이 하나라도 있는지. 첫 완료 보상 안내에 쓴다.
+  Future<bool> hasHistory() async =>
+      await (_db.select(_db.pointHistory)..limit(1)).getSingleOrNull() != null;
+
   /// 오늘 적립 합계(완료 지급 + 취소 차감). 지출은 빼고 계산한다.
   Future<int> todayEarned() async {
     final sum = _db.pointHistory.amount.sum();

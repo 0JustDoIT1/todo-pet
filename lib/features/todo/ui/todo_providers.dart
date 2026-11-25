@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/error/app_exception.dart';
 import '../../../core/ui/day_change_watcher.dart';
+import '../../../core/ui/main_tab.dart';
 import '../../points/data/point_service.dart';
 import '../data/todo_service.dart';
 
@@ -36,6 +37,48 @@ Future<void> runTodoAction(
     messenger
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text(message)));
+  }
+}
+
+/// 완료·취소·체크리스트 체크를 실행하고 포인트 문구를 보여준다.
+/// [action]은 지급(양수)·차감(음수)한 포인트를 돌려주고, 포인트 변화가 없으면 null.
+/// 앱에서 처음 포인트를 받은 순간이면 보상 안내를 한 번 띄운다 (PRD F6).
+Future<void> runCompletion(
+  BuildContext context,
+  WidgetRef ref,
+  Future<int?> Function() action,
+) async {
+  final isFirst = !await ref.read(pointServiceProvider).hasHistory();
+  int? amount;
+  if (!context.mounted) return;
+  await runTodoAction(context, ref, () async {
+    amount = await action();
+    return amount == null ? null : pointMessage(amount!);
+  });
+  if (isFirst && (amount ?? 0) > 0 && context.mounted) {
+    await showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('첫 포인트를 받았어요!'),
+        content: const Text(
+          '할일을 끝낼 때마다 포인트가 쌓여요.\n'
+          '홈에서 포인트로 먹이를 사 줄 수 있어요.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('나중에'),
+          ),
+          FilledButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ref.read(mainTabProvider.notifier).select(MainTab.home);
+            },
+            child: const Text('홈으로 가기'),
+          ),
+        ],
+      ),
+    );
   }
 }
 

@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +13,12 @@ void main() {
   testWidgets('앱이 뜨고 하단 탭 4개로 화면을 전환한다', (tester) async {
     final db = AppDatabase(NativeDatabase.memory());
     addTearDown(db.close);
+    // 온보딩을 마친 사용자 기준으로 하단 탭을 확인한다.
+    await tester.runAsync(
+      () => db
+          .update(db.userProfile)
+          .write(const UserProfileCompanion(onboardingDone: Value(true))),
+    );
 
     await tester.pumpWidget(
       ProviderScope(
@@ -22,6 +29,12 @@ void main() {
         child: const TodoPetApp(),
       ),
     );
+
+    // 시작 분기가 온보딩 완료 여부를 DB에서 읽을 때까지 기다린다.
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 100)),
+    );
+    await tester.pump();
 
     for (final label in ['홈', '할일', '상점', '설정']) {
       expect(find.widgetWithText(NavigationDestination, label), findsOneWidget);

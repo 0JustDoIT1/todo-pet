@@ -7,7 +7,7 @@ import '../domain/species.dart';
 /// 펫 고르기 결과.
 typedef PetChoice = ({String speciesId, String name});
 
-/// 시작 펫 종 선택 + 이름짓기 (PRD F4·F6). 온보딩에서도 같은 시트를 쓴다.
+/// 펫 고르기를 시트로 띄운다 (홈에서 펫이 없을 때, 입양).
 /// [excludeSpecies]에 있는 종은 고를 수 없다 (이미 함께하는 펫).
 Future<PetChoice?> showPetPicker(
   BuildContext context, {
@@ -16,19 +16,38 @@ Future<PetChoice?> showPetPicker(
   context: context,
   isScrollControlled: true,
   useSafeArea: true,
-  builder: (_) => _PetPickerSheet(exclude: excludeSpecies),
+  builder: (context) => Padding(
+    padding: EdgeInsets.only(
+      left: 20,
+      right: 20,
+      top: 16,
+      bottom: MediaQuery.viewInsetsOf(context).bottom + 16,
+    ),
+    child: PetPickerForm(
+      exclude: excludeSpecies,
+      onDone: (choice) => Navigator.pop(context, choice),
+    ),
+  ),
 );
 
-class _PetPickerSheet extends StatefulWidget {
-  const _PetPickerSheet({required this.exclude});
+/// 시작 펫 종 선택 + 이름짓기 (PRD F4·F6). 시트와 온보딩이 같이 쓴다.
+class PetPickerForm extends StatefulWidget {
+  const PetPickerForm({
+    super.key,
+    required this.onDone,
+    this.exclude = const {},
+    this.buttonLabel = '함께하기',
+  });
 
+  final ValueChanged<PetChoice> onDone;
   final Set<String> exclude;
+  final String buttonLabel;
 
   @override
-  State<_PetPickerSheet> createState() => _PetPickerSheetState();
+  State<PetPickerForm> createState() => _PetPickerFormState();
 }
 
-class _PetPickerSheetState extends State<_PetPickerSheet> {
+class _PetPickerFormState extends State<PetPickerForm> {
   final _name = TextEditingController();
   String? _speciesId;
   String? _error;
@@ -46,7 +65,7 @@ class _PetPickerSheetState extends State<_PetPickerSheet> {
     }
     try {
       final name = PetRules.validateName(_name.text);
-      Navigator.pop(context, (speciesId: _speciesId!, name: name));
+      widget.onDone((speciesId: _speciesId!, name: name));
     } on AppException catch (e) {
       setState(() => _error = e.message);
     }
@@ -55,55 +74,44 @@ class _PetPickerSheetState extends State<_PetPickerSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 20,
-        right: 20,
-        top: 16,
-        bottom: MediaQuery.viewInsetsOf(context).bottom + 16,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        spacing: 16,
-        children: [
-          Text('함께할 펫을 골라 주세요', style: theme.textTheme.titleLarge),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              for (final s in starterSpecies)
-                ChoiceChip(
-                  label: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: Column(
-                      children: [
-                        Text(
-                          s.placeholder,
-                          style: const TextStyle(fontSize: 40),
-                        ),
-                        Text(s.name),
-                      ],
-                    ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: 16,
+      children: [
+        Text('함께할 펫을 골라 주세요', style: theme.textTheme.titleLarge),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            for (final s in starterSpecies)
+              ChoiceChip(
+                label: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Column(
+                    children: [
+                      Text(s.placeholder, style: const TextStyle(fontSize: 40)),
+                      Text(s.name),
+                    ],
                   ),
-                  showCheckmark: false,
-                  selected: _speciesId == s.id,
-                  onSelected: widget.exclude.contains(s.id)
-                      ? null
-                      : (_) => setState(() => _speciesId = s.id),
                 ),
-            ],
-          ),
-          TextField(
-            controller: _name,
-            maxLength: PetRules.nameMaxLength,
-            decoration: const InputDecoration(labelText: '이름'),
-            onSubmitted: (_) => _done(),
-          ),
-          if (_error != null)
-            Text(_error!, style: TextStyle(color: theme.colorScheme.error)),
-          FilledButton(onPressed: _done, child: const Text('함께하기')),
-        ],
-      ),
+                showCheckmark: false,
+                selected: _speciesId == s.id,
+                onSelected: widget.exclude.contains(s.id)
+                    ? null
+                    : (_) => setState(() => _speciesId = s.id),
+              ),
+          ],
+        ),
+        TextField(
+          controller: _name,
+          maxLength: PetRules.nameMaxLength,
+          decoration: const InputDecoration(labelText: '이름'),
+          onSubmitted: (_) => _done(),
+        ),
+        if (_error != null)
+          Text(_error!, style: TextStyle(color: theme.colorScheme.error)),
+        FilledButton(onPressed: _done, child: Text(widget.buttonLabel)),
+      ],
     );
   }
 }

@@ -137,14 +137,12 @@ class _TodoTile extends ConsumerWidget {
 
     final checkbox = Checkbox(
       value: done,
-      onChanged: (checked) => runTodoAction(
+      onChanged: (checked) => runCompletion(
         context,
         ref,
-        () async => pointMessage(
-          checked == true
-              ? await service.complete(todo.id)
-              : await service.cancel(todo.id),
-        ),
+        checked == true
+            ? () => service.complete(todo.id)
+            : () => service.cancel(todo.id),
       ),
     );
 
@@ -204,13 +202,11 @@ class _TodoTile extends ConsumerWidget {
             value: i.checked,
             title: Text(i.title),
             controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (checked) => runTodoAction(context, ref, () async {
-              final grant = await service.setItemChecked(
-                i.id,
-                checked ?? false,
-              );
-              return grant == null ? null : pointMessage(grant);
-            }),
+            onChanged: (checked) => runCompletion(
+              context,
+              ref,
+              () => service.setItemChecked(i.id, checked ?? false),
+            ),
           ),
       ],
     );
