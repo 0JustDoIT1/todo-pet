@@ -61,3 +61,4 @@
 - 2026-11-25 | 한국어 날짜 선택 창을 위해 flutter_localizations(SDK 포함, 버전 없음) 사용 | 프레임워크 내장 | pubspec.yaml, lib/app.dart
 - 2026-11-25 | 펫 성장은 애정도 50에서 2단계(기획서 3.2, Phase 1은 2단계까지), pets.exp 컬럼을 애정도로 사용. 초기값: 기분 시간당 -2, 애정도 먹이 +5/+5/+15·탭 +1, 탭 기분 +2 | 사용자 결정(성장 기준), 기획서에 없는 수치는 초기값 | lib/features/pet/domain/, PRD 3.3 수정 제안
 - 2026-11-25 | 배고픔·기분은 읽을 때 경과 시간으로 계산하고 먹이·탭·교체 때만 저장 | 자주 열 때 소수점 감소가 버려지는 문제 방지 | lib/features/pet/data/pet_service.dart
+- 2026-11-25 | 시작 펫 3종: 고양이(cat)·강아지(dog)·토끼(rabbit). 그림 전까지 이모지로 임시 표시 | 사용자 결정 | lib/features/pet/domain/species.dart, docs/ART_PROMPTS.md, PRD 9장 수정 제안

@@ -10,6 +10,7 @@ import '../../points/data/point_service.dart';
 import '../../points/domain/point_reason.dart';
 import '../domain/foods.dart';
 import '../domain/pet_rules.dart';
+import '../domain/species.dart';
 
 /// 화면에 보여줄 펫 상태 (시간 경과 반영).
 class PetView {
@@ -47,6 +48,7 @@ class PetService {
   /// 펫을 만든다(온보딩 선택·입양). 활성 펫이 없으면 활성으로 정한다.
   Future<int> create({required String speciesId, required String name}) =>
       _db.transaction(() async {
+        if (speciesById(speciesId) == null) throw const UnknownSpecies();
         final cleanName = PetRules.validateName(name);
         final owned = await (_db.select(
           _db.pets,

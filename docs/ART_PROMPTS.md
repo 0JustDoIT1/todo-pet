@@ -30,27 +30,57 @@ Cells from left: neutral idle, eyes closed (blink), happy (smiling, eyes curved)
 The same character in every cell; only the face and posture change.
 ```
 
-## 2. 시작 펫 (종 미정, PRD 9장)
-종이 정해지면 아래 템플릿을 복사해 채운다.
+## 2. 시작 펫 3종 (2026-11-25 결정: 고양이·강아지·토끼)
+종 id는 코드 상수(`lib/features/pet/domain/species.dart`)와 같다. 각 프롬프트 앞에 스타일 블록과 펫 시트 지시문을 붙인다. 2단계는 1단계 그림을 참고 이미지로 함께 넣는다. 생김새 문장은 초안이라 바꿔도 된다.
 
-### [ ] `<species>` 1단계 → `assets/pets/<species>/stage1.png` (256×64)
+### [ ] 고양이 1단계 → `assets/pets/cat/stage1.png` (256×64)
 ```
-(스타일 블록)
-(펫 시트 지시문)
-Stage 1 (baby): <생김새 한두 문장, 색·특징 소품>.
+Stage 1 (baby): a tiny round kitten, orange tabby with a cream belly, big eyes, short stubby tail.
 ```
 
-### [ ] `<species>` 2단계 → `assets/pets/<species>/stage2.png` (256×64)
+### [ ] 고양이 2단계 → `assets/pets/cat/stage2.png` (256×64)
 ```
-(스타일 블록)
-(펫 시트 지시문)
-Stage 2 (child): same species as the reference image, slightly bigger and more mature, <추가 특징>.
+Stage 2 (child): same kitten as the reference image, slightly bigger and more mature, longer tail, small bell collar.
 ```
 
-## 3. 먹이 아이콘 (3종, 종류 미정)
-### [ ] `<id>` → `assets/food/<id>.png` (32×32)
+### [ ] 강아지 1단계 → `assets/pets/dog/stage1.png` (256×64)
+```
+Stage 1 (baby): a tiny round puppy, light brown with one darker ear patch, floppy ears, big eyes.
+```
+
+### [ ] 강아지 2단계 → `assets/pets/dog/stage2.png` (256×64)
+```
+Stage 2 (child): same puppy as the reference image, slightly bigger and more mature, wagging tail, red scarf.
+```
+
+### [ ] 토끼 1단계 → `assets/pets/rabbit/stage1.png` (256×64)
+```
+Stage 1 (baby): a tiny round bunny, white with pink inner ears, short ears, fluffy tail.
+```
+
+### [ ] 토끼 2단계 → `assets/pets/rabbit/stage2.png` (256×64)
+```
+Stage 2 (child): same bunny as the reference image, slightly bigger and more mature, long upright ears, small flower on one ear.
+```
+
+## 3. 먹이 아이콘 3종 (기획서 3.5)
+먹이 id는 코드 상수(`lib/features/pet/domain/foods.dart`)와 같다. 각 프롬프트 앞에 아래 블록을 붙인다.
 ```
 Pixel art food item icon, 16-bit style, clean dark outline, limited palette, centered,
 fully transparent background, no text, no logos, no watermark.
-Item: <먹이 설명>.
+```
+
+### [ ] 기본 사료 → `assets/food/basic.png` (32×32)
+```
+Item: a small bowl of round pet kibble.
+```
+
+### [ ] 간식 → `assets/food/snack.png` (32×32)
+```
+Item: a bone-shaped cookie treat.
+```
+
+### [ ] 특별식 → `assets/food/special.png` (32×32)
+```
+Item: a festive plate with a small cake and a star sparkle.
 ```

@@ -42,6 +42,10 @@ class PetNotFound extends AppException {
   const PetNotFound() : super('펫을 찾을 수 없어요.');
 }
 
+class UnknownSpecies extends AppException {
+  const UnknownSpecies() : super('없는 펫 종류예요.');
+}
+
 class PetAlreadyOwned extends AppException {
   const PetAlreadyOwned() : super('이미 함께하고 있는 펫이에요.');
 }

@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/home/ui/home_screen.dart';
 import '../../features/settings/ui/settings_screen.dart';
 import '../../features/shop/ui/shop_screen.dart';
 import '../../features/todo/ui/todo_screen.dart';
+import 'main_tab.dart';
 
 /// 하단 탭(홈·할일·상점·설정) 화면. PRD 7장.
-class MainShell extends StatefulWidget {
+class MainShell extends ConsumerWidget {
   const MainShell({super.key});
-
-  @override
-  State<MainShell> createState() => _MainShellState();
-}
-
-class _MainShellState extends State<MainShell> {
-  int _index = 0;
 
   static const _screens = [
     HomeScreen(),
@@ -24,12 +19,14 @@ class _MainShellState extends State<MainShell> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tab = ref.watch(mainTabProvider);
     return Scaffold(
-      body: IndexedStack(index: _index, children: _screens),
+      body: IndexedStack(index: tab.index, children: _screens),
       bottomNavigationBar: NavigationBar(
-        selectedIndex: _index,
-        onDestinationSelected: (i) => setState(() => _index = i),
+        selectedIndex: tab.index,
+        onDestinationSelected: (i) =>
+            ref.read(mainTabProvider.notifier).select(MainTab.values[i]),
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home_outlined), label: '홈'),
           NavigationDestination(icon: Icon(Icons.checklist), label: '할일'),
