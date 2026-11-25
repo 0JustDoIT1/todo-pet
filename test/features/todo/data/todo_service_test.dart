@@ -212,4 +212,68 @@ void main() {
       expect(item.status, isNull);
     });
   });
+
+  group('listForDate (캘린더)', () {
+    test('앞으로의 날짜: 그날 원타임과 그날 요일의 반복', () async {
+      await todos.add(
+        const TodoDraft(
+          type: TodoType.oneTime,
+          title: '금요 약속',
+          date: '2026-11-27',
+        ),
+      );
+      await todos.add(
+        const TodoDraft(
+          type: TodoType.repeat,
+          title: '금요 정리',
+          repeatWeekdays: 16,
+        ),
+      );
+      await todos.add(
+        const TodoDraft(
+          type: TodoType.repeat,
+          title: '월요 운동',
+          repeatWeekdays: 1,
+        ),
+      );
+
+      final titles = (await todos.listForDate(
+        '2026-11-27',
+      )).map((t) => t.todo.title);
+      expect(titles, unorderedEquals(['금요 약속', '금요 정리']));
+    });
+
+    test('지난 날짜: 그날 회차 기록만(완료·결석), 삭제한 할일도 보인다', () async {
+      final water = await todos.quickAdd('물');
+      await todos.complete(water);
+      await todos.delete(water);
+      now = DateTime(2026, 11, 26, 9);
+
+      final past = await todos.listForDate('2026-11-25');
+      expect(past.single.todo.title, '물');
+      expect(past.single.status, OccurrenceStatus.completed);
+    });
+
+    test('오늘은 오늘 목록과 같다', () async {
+      await todos.quickAdd('오늘 일');
+      expect((await todos.listForDate('2026-11-25')).single.todo.title, '오늘 일');
+    });
+  });
+
+  group('completedHistory (완료 보기)', () {
+    test('최근 완료한 순서, 취소한 회차는 빠진다', () async {
+      final a = await todos.quickAdd('A');
+      final b = await todos.quickAdd('B');
+      final c = await todos.quickAdd('C');
+      await todos.complete(a);
+      now = now.add(const Duration(minutes: 1));
+      await todos.complete(b);
+      now = now.add(const Duration(minutes: 1));
+      await todos.complete(c);
+      await todos.cancel(c);
+
+      final titles = (await todos.completedHistory()).map((h) => h.todo.title);
+      expect(titles, ['B', 'A']);
+    });
+  });
 }

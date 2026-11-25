@@ -99,7 +99,7 @@
 - 테스트: `flutter test`
 - 린트 / 포맷: `flutter analyze` / `dart format .`
 - 빌드: `flutter build apk --debug` (iOS는 이 환경에서 확인 불가)
-- 에뮬레이터: Windows가 TCP 5502~5601을 예약해 기본 포트로는 "too many emulator instances" 오류가 난다. `emulator -avd Pixel_4_API_35_2 -port 5620`로 띄우고 기기 이름은 `emulator-5620`. Claude 셸에서는 샌드박스 밖에서 실행해야 포트를 연다. 에뮬레이터 저장 공간이 부족하면 `flutter build apk --debug --target-platform android-x64`로 빌드해 설치한다(약 146MB)
+- 에뮬레이터: Windows가 TCP 5502~5601을 예약해 기본 포트로는 "too many emulator instances" 오류가 난다. `emulator -avd Pixel_4_API_35_2 -port 5620`로 띄우고 기기 이름은 `emulator-5620`. Claude 셸에서는 샌드박스 밖에서 실행해야 포트를 연다. 에뮬레이터 저장 공간이 부족하면 `flutter build apk --debug --target-platform android-x64`로 빌드해 설치한다(약 146MB). 그래도 모자라면 `flutter build apk --release --target-platform android-x64`(약 22MB, 디버그 키 서명이라 덮어쓰기 가능, 데이터 유지)
 - 환경변수: `.env.example` 참고
 
 ## 구조

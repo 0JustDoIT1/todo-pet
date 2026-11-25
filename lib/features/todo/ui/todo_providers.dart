@@ -13,6 +13,20 @@ final todayTodosProvider = FutureProvider<List<TodayTodo>>((ref) async {
   return ref.watch(todoServiceProvider).todayList();
 });
 
+/// 캘린더에서 고른 날짜의 할일.
+final dateTodosProvider = FutureProvider.family<List<TodayTodo>, String>((
+  ref,
+  date,
+) async {
+  await ref.watch(dayRolloverProvider.future);
+  return ref.watch(todoServiceProvider).listForDate(date);
+});
+
+/// 완료 기록.
+final completedHistoryProvider = FutureProvider<List<CompletedTodo>>(
+  (ref) => ref.watch(todoServiceProvider).completedHistory(),
+);
+
 /// 포인트 잔액.
 final balanceProvider = FutureProvider<int>(
   (ref) => ref.watch(pointServiceProvider).balance(),
@@ -32,6 +46,8 @@ Future<void> runTodoAction(
     message = e.message;
   }
   ref.invalidate(todayTodosProvider);
+  ref.invalidate(dateTodosProvider);
+  ref.invalidate(completedHistoryProvider);
   ref.invalidate(balanceProvider);
   if (message != null) {
     messenger

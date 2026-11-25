@@ -31,6 +31,20 @@ class TodayTodo {
   bool get isCompleted => status == OccurrenceStatus.completed;
 }
 
+/// 완료 기록의 한 줄.
+class CompletedTodo {
+  const CompletedTodo({
+    required this.todo,
+    required this.date,
+    required this.completedAt,
+  });
+
+  /// 삭제한 할일도 기록에는 남는다.
+  final Todo todo;
+  final String date;
+  final DateTime completedAt;
+}
+
 /// 할일 등록·수정·삭제·완료 (PRD 3.1). 포인트는 [PointService]가 처리한다.
 class TodoService {
   TodoService(this._db, this._points, this._now);
@@ -182,6 +196,91 @@ class TodoService {
       );
     }
     return result;
+  }
+
+  /// 캘린더에서 고른 날짜의 할일 (PRD F2).
+  /// - 오늘: 오늘 목록과 같다.
+  /// - 지난 날: 그날 남은 회차 기록(완료·결석·취소)만 보여준다.
+  /// - 앞으로: 그날로 정한 원타임·체크리스트와 그날 해당하는 반복.
+  Future<List<TodayTodo>> listForDate(String date) async {
+    final today = _today;
+    final diff = daysBetween(today, date);
+    if (diff == 0) return todayList();
+
+    if (diff < 0) {
+      final rows =
+          await (_db.select(_db.todoOccurrences).join([
+                  innerJoin(
+                    _db.todos,
+                    _db.todos.id.equalsExp(_db.todoOccurrences.todoId),
+                  ),
+                ])
+                ..where(_db.todoOccurrences.date.equals(date))
+                ..orderBy([OrderingTerm.asc(_db.todos.id)]))
+              .get();
+      return [
+        for (final r in rows)
+          TodayTodo(
+            todo: r.readTable(_db.todos),
+            status: r.readTable(_db.todoOccurrences).status,
+            delayDays: 0,
+            items: const [],
+          ),
+      ];
+    }
+
+    final todos = await (_db.select(
+      _db.todos,
+    )..where((t) => t.deletedAt.isNull())).get();
+    final result = <TodayTodo>[];
+    for (final todo in todos) {
+      final due = todo.type == TodoType.repeat
+          ? TodoRules.isRepeatDueOn(
+              repeatWeekdays: todo.repeatWeekdays ?? 0,
+              startDate: todo.startDate,
+              date: date,
+            )
+          : todo.date == date;
+      if (!due) continue;
+      result.add(
+        TodayTodo(
+          todo: todo,
+          status: null,
+          delayDays: 0,
+          items: todo.type == TodoType.checklist
+              ? await _items(todo.id)
+              : const [],
+        ),
+      );
+    }
+    return result;
+  }
+
+  /// 완료 기록 (PRD F2). 최근 완료한 순서로 [limit]개.
+  Future<List<CompletedTodo>> completedHistory({int limit = 100}) async {
+    final rows =
+        await (_db.select(_db.todoOccurrences).join([
+                innerJoin(
+                  _db.todos,
+                  _db.todos.id.equalsExp(_db.todoOccurrences.todoId),
+                ),
+              ])
+              ..where(
+                _db.todoOccurrences.status.equalsValue(
+                  OccurrenceStatus.completed,
+                ),
+              )
+              ..orderBy([OrderingTerm.desc(_db.todoOccurrences.completedAt)])
+              ..limit(limit))
+            .get();
+    return [
+      for (final r in rows)
+        CompletedTodo(
+          todo: r.readTable(_db.todos),
+          date: r.readTable(_db.todoOccurrences).date,
+          completedAt: r.readTable(_db.todoOccurrences).completedAt!,
+        ),
+    ];
   }
 
   bool _isDueToday(Todo todo) => TodoRules.canCompleteToday(
