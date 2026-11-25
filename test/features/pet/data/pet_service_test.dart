@@ -135,6 +135,49 @@ void main() {
     expect((await pets.activePet())!.hunger, 55);
   });
 
+  group('입양', () {
+    test('300P를 쓰고 새 펫을 만들며, 활성 펫은 그대로다', () async {
+      await givePoints(350);
+      final cat = await pets.create(speciesId: 'cat', name: '나비');
+
+      final dog = await pets.adopt(speciesId: 'dog', name: '바둑');
+      expect(await points.balance(), 50);
+      expect((await petRow(dog)).stage, 1);
+      expect((await pets.activePet())!.pet.id, cat);
+    });
+
+    test('포인트가 모자라면 펫도 만들어지지 않는다', () async {
+      await givePoints(299);
+      await pets.create(speciesId: 'cat', name: '나비');
+
+      await expectLater(
+        pets.adopt(speciesId: 'dog', name: '바둑'),
+        throwsA(isA<InsufficientPoints>()),
+      );
+      expect(await pets.allPets(), hasLength(1));
+      expect(await points.balance(), 299);
+    });
+
+    test('이미 있는 종이면 포인트를 쓰지 않는다', () async {
+      await givePoints(300);
+      await pets.create(speciesId: 'cat', name: '나비');
+
+      await expectLater(
+        pets.adopt(speciesId: 'cat', name: '나비2'),
+        throwsA(isA<PetAlreadyOwned>()),
+      );
+      expect(await points.balance(), 300);
+    });
+
+    test('시작 종이 아니면 거부한다', () async {
+      await givePoints(300);
+      await expectLater(
+        pets.adopt(speciesId: 'dragon', name: '용용'),
+        throwsA(isA<UnknownSpecies>()),
+      );
+    });
+  });
+
   test('이름 변경은 1~10자 규칙을 따른다', () async {
     final id = await pets.create(speciesId: 'cat', name: '나비');
     await pets.rename(id, ' 치즈 ');

@@ -73,6 +73,19 @@ class PetService {
         return id;
       });
 
+  /// 아직 없는 시작 종을 포인트로 입양한다 (PRD 3.3). 활성 펫은 바꾸지 않는다.
+  /// 종·이름 검증, 포인트 지출, 펫 생성은 한 트랜잭션이라 하나라도 실패하면 모두 취소된다.
+  Future<int> adopt({required String speciesId, required String name}) =>
+      _db.transaction(() async {
+        final id = await create(speciesId: speciesId, name: name);
+        await _points.spend(
+          price: PetRules.adoptionPrice,
+          reason: PointReason.adoption,
+          itemId: speciesId,
+        );
+        return id;
+      });
+
   /// 활성 펫의 현재 상태. 펫이 없으면 null.
   Future<PetView?> activePet() async {
     final id = (await _profile()).activePetId;

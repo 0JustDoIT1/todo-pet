@@ -38,6 +38,9 @@ abstract final class PetRules {
 
   static const nameMaxLength = 10;
 
+  /// 시작 종 추가 입양 가격 (PRD 3.3 초기값).
+  static const adoptionPrice = 300;
+
   /// 마지막 갱신 시각부터 지난 시간만큼 줄인 현재 수치.
   static PetStats decayed({
     required int hunger,

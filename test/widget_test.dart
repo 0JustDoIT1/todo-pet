@@ -42,7 +42,8 @@ void main() {
 
     await tester.tap(find.widgetWithText(NavigationDestination, '상점'));
     await tester.pump(const Duration(milliseconds: 500));
-    expect(find.text('먹이와 입양이 여기에 표시됩니다'), findsOneWidget);
+    // 상점 화면에만 있는 먹이 이름으로 전환을 확인한다.
+    expect(find.text('기본 사료'), findsOneWidget);
 
     // 위젯 트리를 내려 자정 타이머를 정리한다.
     await tester.pumpWidget(const SizedBox());

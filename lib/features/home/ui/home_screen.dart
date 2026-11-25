@@ -9,6 +9,7 @@ import '../../pet/data/pet_service.dart';
 import '../../pet/domain/pet_rules.dart';
 import '../../pet/domain/species.dart';
 import '../../pet/ui/feed_sheet.dart';
+import '../../pet/ui/pet_actions.dart';
 import '../../pet/ui/pet_avatar.dart';
 import '../../pet/ui/pet_picker_sheet.dart';
 import '../../pet/ui/pet_providers.dart';
@@ -75,17 +76,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       balance: balance,
       full: !PetRules.canFeed(pet.stats),
     );
-    if (food == null) return;
-    try {
-      final result = await ref.read(petServiceProvider).feed(food.id);
-      setState(() => _jump++);
-      _say(result.grewUp ? '쑥 자랐어요!' : '맛있어요!');
-      _toast('${food.name} -${food.price}P');
-    } on AppException catch (e) {
-      _toast(e.message);
-    }
-    ref.invalidate(activePetProvider);
-    ref.invalidate(balanceProvider);
+    if (food == null || !mounted) return;
+    final result = await feedPet(context, ref, food);
+    if (result == null || !mounted) return;
+    setState(() => _jump++);
+    _say(result.grewUp ? '쑥 자랐어요!' : '맛있어요!');
   }
 
   Future<void> _pickPet() async {
@@ -99,6 +94,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       _toast(e.message);
     }
     ref.invalidate(activePetProvider);
+    ref.invalidate(ownedPetsProvider);
   }
 
   @override
