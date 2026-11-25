@@ -1,5 +1,6 @@
 import '../../../core/date/date_key.dart';
 import '../../../core/error/app_exception.dart';
+import 'categories.dart';
 import 'todo_enums.dart';
 
 /// 할일 등록·수정 입력값 (PRD 3.1).
@@ -7,7 +8,7 @@ class TodoDraft {
   const TodoDraft({
     required this.type,
     required this.title,
-    this.difficulty = Difficulty.low,
+    this.difficulty = Difficulty.mid, // 기획서 2.3: 기본 난이도 '중'
     this.categoryId,
     this.date,
     this.repeatWeekdays,
@@ -37,6 +38,9 @@ abstract final class TodoRules {
   static void validate(TodoDraft draft) {
     if (draft.title.trim().isEmpty) {
       throw const InvalidTodo('제목을 입력해 주세요.');
+    }
+    if (draft.categoryId != null && categoryById(draft.categoryId) == null) {
+      throw const InvalidTodo('없는 카테고리예요.');
     }
     switch (draft.type) {
       case TodoType.oneTime:

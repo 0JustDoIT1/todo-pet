@@ -56,3 +56,6 @@
 - 2026-11-25 | 일일 상한은 완료 지급·취소 차감만 합산(지출 제외), 하위항목 0개 체크리스트는 완료 불가 | PRD 3.2 해석 (사용자 확정) | lib/features/points/domain/point_rules.dart
 - 2026-11-25 | 에러 처리 sealed 도메인 예외, 로깅 debugPrint만, 한국어 주석, 날짜는 내장 DateTime + 현재 시각 Provider | 포인트 서비스 착수 전 결정 | docs/decisions.md
 - 2026-11-25 | Git 방식을 MysteryTalk와 같게: 작업별 브랜치 + main에 fast-forward 로컬 병합, 한국어 커밋 메시지, Co-Authored-By 없음 | 1인 프로젝트라 PR 불필요, 기록을 한 줄로 유지 (사용자 요청) | docs/decisions.md, CLAUDE.md
+- 2026-11-25 | 원본 기획서(PDF) 대조: 빠른 등록·상세 등록 기본 난이도 '중'(PRD의 '하' 대체), '가장 싼 먹이 5P 이하' 규칙 삭제(기본 사료 10P = 중 1건), 카테고리 8종은 기획서 2.9 이름으로 코드 상수 유지(Phase 2에 같은 id로 테이블 시드) | 사용자 결정 | lib/features/todo/domain/, PRD 3.1·3.3 수정 제안
+- 2026-11-25 | 펫 수치는 기획서 값 사용 예정: 배고픔 시간당 약 4.2 감소(24시간에 100→0), 먹이 기본 사료 10P(배고픔+20·기분+5)·간식 30P(+10·+15)·특별식 100P(+50·+30) | 기획서 3.4·3.5 확정값 | 펫 작업 때 반영, PRD 9장 수정 제안
+- 2026-11-25 | 한국어 날짜 선택 창을 위해 flutter_localizations(SDK 포함, 버전 없음) 사용 | 프레임워크 내장 | pubspec.yaml, lib/app.dart

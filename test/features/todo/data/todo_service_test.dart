@@ -34,7 +34,7 @@ void main() {
     db.checklistItems,
   )..where((i) => i.todoId.equals(todoId))).get();
 
-  test('빠른 등록은 오늘·난이도 하로 저장되고 완료하면 5P', () async {
+  test('빠른 등록은 오늘·난이도 중으로 저장되고 완료하면 10P (기획서 2.3)', () async {
     final id = await todos.quickAdd(' 물 마시기 ');
     final todo = await (db.select(
       db.todos,
@@ -42,8 +42,8 @@ void main() {
 
     expect(todo.title, '물 마시기');
     expect(todo.date, '2026-11-25');
-    expect(todo.difficulty, Difficulty.low);
-    expect(await todos.complete(id), 5);
+    expect(todo.difficulty, Difficulty.mid);
+    expect(await todos.complete(id), 10);
   });
 
   test('미래 날짜 할일은 완료할 수 없다', () async {
@@ -94,8 +94,8 @@ void main() {
     final items = await itemsOf(id);
 
     expect(await todos.setItemChecked(items[0].id, true), isNull);
-    expect(await todos.setItemChecked(items[1].id, true), 5);
-    expect(await points.balance(), 5);
+    expect(await todos.setItemChecked(items[1].id, true), 10);
+    expect(await points.balance(), 10);
   });
 
   test('완료된 체크리스트는 항목을 해제할 수 없다 (취소 먼저)', () async {
@@ -147,7 +147,7 @@ void main() {
 
     expect(await todos.todayList(), isEmpty);
     await expectLater(todos.complete(id), throwsA(isA<TodoNotFound>()));
-    expect(await points.balance(), 5);
+    expect(await points.balance(), 10);
   });
 
   group('todayList', () {

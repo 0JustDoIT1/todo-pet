@@ -41,7 +41,7 @@ class TodoService {
 
   String get _today => dateKey(_now());
 
-  /// 빠른 등록: 제목만, 오늘·난이도 하.
+  /// 빠른 등록: 제목만, 오늘·난이도 중 (기획서 2.3).
   Future<int> quickAdd(String title) =>
       add(TodoDraft(type: TodoType.oneTime, title: title, date: _today));
 
