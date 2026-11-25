@@ -64,3 +64,4 @@
 - 2026-11-25 | 배고픔·기분은 읽을 때 경과 시간으로 계산하고 먹이·탭·교체 때만 저장 | 자주 열 때 소수점 감소가 버려지는 문제 방지 | lib/features/pet/data/pet_service.dart
 - 2026-11-25 | 시작 펫 3종: 고양이(cat)·강아지(dog)·토끼(rabbit). 그림 전까지 이모지로 임시 표시 | 사용자 결정 | lib/features/pet/domain/species.dart, docs/ART_PROMPTS.md, PRD 9장 수정 제안
 - 2026-11-25 | 온보딩: 소개 → 펫 고르기·이름 → 첫 할일 1~3개(기획서 5.9), 마지막에 한 번에 저장. 첫 완료 보상 안내는 포인트 이력이 없을 때 첫 지급 직후 1회 | 기존 결정(첫 할일 등록 때 저장) 구현 | lib/features/onboarding/
+- 2026-11-25 | 앱 이름 '투두펫'(앱 안 제목·Android 런처·iOS 표시 이름). 아이콘은 펫 그림이 생기면 그 그림으로 제작 | 사용자 결정 | lib/app.dart, AndroidManifest.xml, ios/Runner/Info.plist
