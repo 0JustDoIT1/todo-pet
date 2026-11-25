@@ -13,9 +13,9 @@
 | 플랫폼 | 개발 OS / 셸 | Windows / PowerShell |
 | 스택 | 언어·프레임워크 (버전까지) | Flutter 3.44.8 (stable) / Dart 3.12.2 |
 | 스택 | 패키지 매니저 | pub (`flutter pub`) |
-| 구조 | 렌더링 방식 / 앱 구조 | 미정 |
+| 구조 | 렌더링 방식 / 앱 구조 | Flutter 단일 앱, 하단 4탭(IndexedStack) + 온보딩 분기, 라우팅 패키지 없음 |
 | 구조 | 상태관리 | Riverpod |
-| 구조 | API 방식 | 미정 |
+| 구조 | API 방식 | 해당 없음 (Phase 1 로컬 전용, 서버 없음) |
 | 구조 | 디렉터리 규칙 | 기능별: `lib/features/<기능>/{domain,data,ui}`, 공통 `lib/core/`. domain은 Flutter 의존 없는 순수 Dart |
 | 데이터 | DB / ORM / 마이그레이션 도구 | 로컬 SQLite / Drift |
 | 데이터 | 시드·데이터 입력 방식 | 시드 없음. DB 생성 시 user_profile 1행만 넣음. 종·먹이·카테고리는 코드 상수 |
@@ -32,12 +32,13 @@
 
 | 용도 | 선택 | 이유 | 날짜 |
 | --- | --- | --- | --- |
-| 토스트·알림 | 미정 | | |
-| 모달·다이얼로그 | 미정 | | |
-| 폼 검증 | 미정 | | |
+| 토스트·알림 | Flutter 내장 SnackBar | 앱 안 알림은 이 정도로 충분 (사용자 선택) | 2026-11-25 |
+| 모달·다이얼로그 | Flutter 내장 AlertDialog, 등록·고르기는 ModalBottomSheet | 패키지 불필요 (사용자 선택) | 2026-11-25 |
+| 폼 검증 | 직접 구현: 도메인 규칙 함수(`TodoRules.validate`, `PetRules.validateName`)가 도메인 예외를 던지고 폼이 문구를 보여줌 | 규칙이 도메인에 있고 수가 적음 | 2026-11-25 |
+| 달력 | Flutter 내장 CalendarDatePicker (+ flutter_localizations) | 한국어 달력 기본 제공, 날짜별 표시(점)는 미지원 | 2026-11-25 |
 | 날짜·시간 처리 | 내장 DateTime + `lib/core/date/`(날짜 키 변환, 현재 시각 Provider). 한국어 날짜 표시가 필요해지면 intl 검토 | 필요 기능이 고정 형식 문자열과 테스트용 시각 고정뿐, 시각 읽는 곳이 서비스 한 곳 | 2026-11-25 |
-| 아이콘 | 미정 | | |
-| HTTP 클라이언트 | 미정 | | |
+| 아이콘 | Material Icons (Flutter 기본) | 추가 패키지 불필요 | 2026-11-25 |
+| HTTP 클라이언트 | 해당 없음 (Phase 1 로컬 전용) | | |
 | 펫 그래픽 | 개발 시점 AI 생성(ChatGPT 이미지) 1×4 표정 시트 + 코드 모션, `docs/ART_PROMPTS.md` | MysteryTalk에서 같은 방식 사용, 직접 도트 제작보다 단순 | 2026-11-25 |
 
 ## 변경 로그
