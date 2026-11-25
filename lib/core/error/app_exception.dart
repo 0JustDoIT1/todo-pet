@@ -28,3 +28,16 @@ class CancelNotAllowed extends AppException {
 class InsufficientPoints extends AppException {
   const InsufficientPoints() : super('포인트가 부족해요.');
 }
+
+/// 할일 입력값이 규칙에 맞지 않음. 문구는 원인별로 넘긴다.
+class InvalidTodo extends AppException {
+  const InvalidTodo(super.message);
+}
+
+class TodoNotDueToday extends AppException {
+  const TodoNotDueToday() : super('오늘 할일만 완료할 수 있어요.');
+}
+
+class TodoLocked extends AppException {
+  const TodoLocked() : super('완료한 할일은 수정할 수 없어요. 완료를 취소한 뒤 수정해 주세요.');
+}
