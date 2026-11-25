@@ -38,6 +38,26 @@ class TodoNotDueToday extends AppException {
   const TodoNotDueToday() : super('오늘 할일만 완료할 수 있어요.');
 }
 
+class PetNotFound extends AppException {
+  const PetNotFound() : super('펫을 찾을 수 없어요.');
+}
+
+class PetAlreadyOwned extends AppException {
+  const PetAlreadyOwned() : super('이미 함께하고 있는 펫이에요.');
+}
+
+class PetFull extends AppException {
+  const PetFull() : super('배가 불러서 더 먹을 수 없어요.');
+}
+
+class InvalidPetName extends AppException {
+  const InvalidPetName() : super('이름은 1~10자로 지어 주세요.');
+}
+
+class FoodNotFound extends AppException {
+  const FoodNotFound() : super('없는 먹이예요.');
+}
+
 class TodoLocked extends AppException {
   const TodoLocked() : super('완료한 할일은 수정할 수 없어요. 완료를 취소한 뒤 수정해 주세요.');
 }
