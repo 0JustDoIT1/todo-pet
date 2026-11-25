@@ -17,6 +17,15 @@ int daysBetween(String from, String to) {
   return utc(to).difference(utc(from)).inDays;
 }
 
+/// 'yyyy-MM-dd'에 [days]일을 더한 날짜.
+String addDays(String key, int days) {
+  final p = key.split('-').map(int.parse).toList();
+  final d = DateTime.utc(p[0], p[1], p[2] + days);
+  return '${d.year.toString().padLeft(4, '0')}-'
+      '${d.month.toString().padLeft(2, '0')}-'
+      '${d.day.toString().padLeft(2, '0')}';
+}
+
 /// 'yyyy-MM-dd'의 요일 비트 (월=1, 화=2, … 일=64). todos.repeatWeekdays와 같은 형식.
 int weekdayBit(String key) {
   final p = key.split('-').map(int.parse).toList();
