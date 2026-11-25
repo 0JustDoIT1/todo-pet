@@ -20,7 +20,7 @@ class TodoFormResult {
 /// 상세 등록(새 할일) 또는 수정([initial]) 시트를 띄운다.
 Future<TodoFormResult?> showTodoForm(
   BuildContext context, {
-  required String today,
+  required String defaultDate,
   Todo? initial,
   List<ChecklistItem> initialItems = const [],
 }) => showModalBottomSheet<TodoFormResult>(
@@ -28,7 +28,7 @@ Future<TodoFormResult?> showTodoForm(
   isScrollControlled: true,
   useSafeArea: true,
   builder: (_) => _TodoFormSheet(
-    today: today,
+    defaultDate: defaultDate,
     initial: initial,
     initialItems: initialItems,
   ),
@@ -42,12 +42,13 @@ const _typeNames = {
 
 class _TodoFormSheet extends StatefulWidget {
   const _TodoFormSheet({
-    required this.today,
+    required this.defaultDate,
     required this.initial,
     required this.initialItems,
   });
 
-  final String today;
+  /// 새 할일의 기본 날짜 (수정할 때는 할일의 날짜를 쓴다).
+  final String defaultDate;
   final Todo? initial;
   final List<ChecklistItem> initialItems;
 
@@ -75,7 +76,7 @@ class _TodoFormSheetState extends State<_TodoFormSheet> {
     _type = t?.type ?? TodoType.oneTime;
     _difficulty = t?.difficulty ?? Difficulty.mid;
     _categoryId = t?.categoryId;
-    _date = t?.date ?? widget.today;
+    _date = t?.date ?? widget.defaultDate;
     _weekdays = t?.repeatWeekdays ?? TodoRules.everyDay;
     _items = [
       for (final i in widget.initialItems) TextEditingController(text: i.title),

@@ -13,6 +13,18 @@ final todayTodosProvider = FutureProvider<List<TodayTodo>>((ref) async {
   return ref.watch(todoServiceProvider).todayList();
 });
 
+/// 캘린더에서 고른 날짜 ('yyyy-MM-dd'). null이면 오늘.
+class CalendarDateNotifier extends Notifier<String?> {
+  @override
+  String? build() => null;
+
+  void select(String date) => state = date;
+}
+
+final calendarDateProvider = NotifierProvider<CalendarDateNotifier, String?>(
+  CalendarDateNotifier.new,
+);
+
 /// 캘린더에서 고른 날짜의 할일.
 final dateTodosProvider = FutureProvider.family<List<TodayTodo>, String>((
   ref,

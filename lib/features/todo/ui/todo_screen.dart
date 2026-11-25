@@ -43,10 +43,14 @@ class TodoScreen extends ConsumerWidget {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          tooltip: '할일 추가',
-          onPressed: () => _add(context, ref, today),
-          child: const Icon(Icons.add),
+        // 탭 위치를 읽으려고 DefaultTabController 아래 context를 쓴다.
+        floatingActionButton: Builder(
+          builder: (context) => FloatingActionButton(
+            tooltip: '할일 추가',
+            onPressed: () =>
+                _add(context, ref, _defaultDate(context, ref, today)),
+            child: const Icon(Icons.add),
+          ),
         ),
         body: TabBarView(
           children: [
@@ -59,8 +63,21 @@ class TodoScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _add(BuildContext context, WidgetRef ref, String today) async {
-    final result = await showTodoForm(context, today: today);
+  /// 새 할일의 기본 날짜: 캘린더 탭에서 오늘 이후 날짜를 골랐으면 그 날짜, 아니면 오늘.
+  /// 지난 날짜를 기본으로 하면 바로 지연 할일이 되므로 오늘로 둔다.
+  String _defaultDate(BuildContext context, WidgetRef ref, String today) {
+    final onCalendar = DefaultTabController.of(context).index == 1;
+    final selected = ref.read(calendarDateProvider);
+    if (!onCalendar || selected == null) return today;
+    return daysBetween(today, selected) > 0 ? selected : today;
+  }
+
+  Future<void> _add(
+    BuildContext context,
+    WidgetRef ref,
+    String defaultDate,
+  ) async {
+    final result = await showTodoForm(context, defaultDate: defaultDate);
     final draft = result?.draft;
     if (draft == null || !context.mounted) return;
     await runTodoAction(context, ref, () async {
@@ -112,13 +129,12 @@ class _CalendarTab extends ConsumerStatefulWidget {
 }
 
 class _CalendarTabState extends ConsumerState<_CalendarTab> {
-  late String _selected = widget.today;
-
   @override
   Widget build(BuildContext context) {
-    final p = _selected.split('-').map(int.parse).toList();
-    final isToday = _selected == widget.today;
-    final todos = ref.watch(dateTodosProvider(_selected));
+    final selected = ref.watch(calendarDateProvider) ?? widget.today;
+    final p = selected.split('-').map(int.parse).toList();
+    final isToday = selected == widget.today;
+    final todos = ref.watch(dateTodosProvider(selected));
 
     return ListView(
       padding: const EdgeInsets.only(bottom: 88),
@@ -127,12 +143,13 @@ class _CalendarTabState extends ConsumerState<_CalendarTab> {
           initialDate: DateTime(p[0], p[1], p[2]),
           firstDate: DateTime(2020),
           lastDate: DateTime(2100),
-          onDateChanged: (d) => setState(() => _selected = keyFromDate(d)),
+          onDateChanged: (d) =>
+              ref.read(calendarDateProvider.notifier).select(keyFromDate(d)),
         ),
         const Divider(height: 1),
         ListTile(
           title: Text(
-            dateLabel(_selected),
+            dateLabel(selected),
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
@@ -372,7 +389,7 @@ class _TodoTile extends ConsumerWidget {
   Future<void> _edit(BuildContext context, WidgetRef ref) async {
     final result = await showTodoForm(
       context,
-      today: today,
+      defaultDate: today,
       initial: item.todo,
       initialItems: item.items,
     );
