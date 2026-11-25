@@ -103,7 +103,7 @@
 
 ## 구조
 ```text
-lib/core/: 공통 (DB, 날짜, 테마)
+lib/core/: 공통 (db/ DB, date/ 날짜 키·현재 시각 Provider, error/ 도메인 예외, ui/ 앱 셸)
 lib/app.dart, lib/core/ui/main_shell.dart: 앱 진입과 하단 4탭
 lib/core/db/: Drift 테이블·DB·Provider (app_database.g.dart는 생성 코드, 직접 수정 금지)
 drift_schemas/: 버전별 스키마 기록 (build.yaml에서 설정)
