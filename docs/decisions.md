@@ -18,7 +18,8 @@
 | 구조 | API 방식 | 미정 |
 | 구조 | 디렉터리 규칙 | 기능별: `lib/features/<기능>/{domain,data,ui}`, 공통 `lib/core/`. domain은 Flutter 의존 없는 순수 Dart |
 | 데이터 | DB / ORM / 마이그레이션 도구 | 로컬 SQLite / Drift |
-| 데이터 | 시드·데이터 입력 방식 | 미정 |
+| 데이터 | 시드·데이터 입력 방식 | 시드 없음. DB 생성 시 user_profile 1행만 넣음. 종·먹이·카테고리는 코드 상수 |
+| 데이터 | 스키마 버전 관리 | Drift schemaVersion + `drift_schemas/`(`dart run drift_dev make-migrations`). 생성 코드(`*.g.dart`)는 커밋 |
 | 인증 | 방식과 권한 모델 | Phase 1 없음, Phase 3.5~4 소셜 로그인·클라우드 백업 |
 | 외부 서비스 | 사용 서비스와 월 비용 상한 | Phase 1 앱 런타임 외부 서비스 없음 (에셋 생성은 개발자가 AI 이미지 도구로 수동 작업) |
 | 품질 | 테스트 수준 (L0~L3) | L1 |
@@ -50,3 +51,5 @@
 - 2026-11-25 | PRD v0.3 e2e 재검토: 체크리스트는 전체 완료 시만 지급, 시작 종 추가 입양 허용(상점 탭 유지), 기분은 표정에만 연결, 종·먹이·카테고리는 코드 상수, 날짜 넘김은 앱 열 때 일괄 처리, 취소 차감은 지급 당시 금액·완료된 할일 수정 불가·오늘/이월만 완료·배고픔 100이면 구매 불가·최저 먹이 5P 이하 | 과설계 제거·누락 보완 | docs/PRD.md(사용자가 직접 복사해 반영), CLAUDE.md, docs/ART_PROMPTS.md
 - 2026-11-25 | Flutter 프로젝트 생성: Flutter 3.44.8 고정, 패키지명 com.justdoit.todopet, Dart 패키지 todo_pet, Android 먼저(ios/ 생성만), 기능별 폴더, flutter_lints | 사용자 선택 | docs/decisions.md, CLAUDE.md, pubspec.yaml
 - 2026-11-25 | 패키지 추가(버전 고정): flutter_riverpod 3.5.0, drift 2.35.4, drift_flutter 0.3.1, dev: drift_dev 2.35.3, build_runner 2.15.1. Riverpod 코드 생성은 쓰지 않음 | 사용자 승인, pub.dev·dry-run으로 호환 확인 | pubspec.yaml, pubspec.lock
+- 2026-11-25 | DB 스키마 v1 (todos·checklist_items·todo_occurrences·point_history·pets·user_profile). 취소는 회차 행을 남기고 status만 변경, 날짜는 현지 'yyyy-MM-dd' 문자열 | 사용자 승인 | lib/core/db/, drift_schemas/
+- 2026-11-25 | 온보딩은 첫 할일 등록 때 펫·할일을 한 번에 저장하고 완료 처리, 첫 완료 보상 안내는 포인트 이력이 비었을 때 1회 | 같은 종 중복 저장 방지 (사용자 승인) | PRD 7장 수정 제안
