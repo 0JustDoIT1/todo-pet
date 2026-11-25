@@ -131,6 +131,7 @@ PRD에서 절대 깨지면 안 되는 규칙. 위반하는 코드는 작성하�
 - 반드시 따를 것:
   - 상태관리 Riverpod(flutter_riverpod, 코드 생성 없이 Provider 직접 작성), DB Drift(SQLite)
   - Drift 코드 생성: `dart run build_runner build`
+  - Git: 작업마다 `feat/`·`fix/`·`docs/`·`chore/` 등 브랜치를 main에서 새로 만들고, 끝나면 main에 `git merge --ff-only`로 합친다. 커밋 메시지는 한국어 `종류: 요약`, Co-Authored-By 트레일러는 넣지 않는다
   - 종·먹이·카테고리는 코드 상수로 둔다. DB에는 사용자 데이터만 둔다
   - 픽셀 그림은 `FilterQuality.none`으로 그린다
   - 새 그림은 `docs/ART_PROMPTS.md` 규격을 따르고 `ASSETS.md`에 출처를 적는다

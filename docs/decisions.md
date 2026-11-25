@@ -25,7 +25,7 @@
 | 품질 | 테스트 수준 (L0~L3) | L1 |
 | 품질 | 린터 / 포매터 | flutter_lints 6 (템플릿 기본) / `dart format` |
 | 코드 규칙 | 에러 처리 / 로깅 / 주석 언어 | 규칙 위반은 sealed 도메인 예외(`lib/core/error/`)로 던지고 화면에서 한국어로 안내 / `debugPrint`만, 개인 데이터(할일 제목 등)는 로그 금지 / 한국어 주석 |
-| Git | 브랜치 전략 / 커밋 형식 | main + feature/*, Conventional Commits |
+| Git | 브랜치 전략 / 커밋 형식 | main + 작업별 브랜치(`feat/`·`fix/`·`docs/`·`chore/`·`refactor/`·`test/` + 내용). 작업이 끝나면 main에 `git merge --ff-only`로 로컬 병합(PR 없음). 커밋은 `feat\|fix\|refactor\|test\|docs\|chore: 요약`(한국어), Co-Authored-By 트레일러 없음. 커밋·병합·푸시는 승인 후 |
 | 배포 | 환경 구분 / CI / 배포 대상 | 미정 |
 
 ## 기본 부품
@@ -55,3 +55,4 @@
 - 2026-11-25 | 온보딩은 첫 할일 등록 때 펫·할일을 한 번에 저장하고 완료 처리, 첫 완료 보상 안내는 포인트 이력이 비었을 때 1회 | 같은 종 중복 저장 방지 (사용자 승인) | PRD 7장 수정 제안
 - 2026-11-25 | 일일 상한은 완료 지급·취소 차감만 합산(지출 제외), 하위항목 0개 체크리스트는 완료 불가 | PRD 3.2 해석 (사용자 확정) | lib/features/points/domain/point_rules.dart
 - 2026-11-25 | 에러 처리 sealed 도메인 예외, 로깅 debugPrint만, 한국어 주석, 날짜는 내장 DateTime + 현재 시각 Provider | 포인트 서비스 착수 전 결정 | docs/decisions.md
+- 2026-11-25 | Git 방식을 MysteryTalk와 같게: 작업별 브랜치 + main에 fast-forward 로컬 병합, 한국어 커밋 메시지, Co-Authored-By 없음 | 1인 프로젝트라 PR 불필요, 기록을 한 줄로 유지 (사용자 요청) | docs/decisions.md, CLAUDE.md
