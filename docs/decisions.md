@@ -24,7 +24,7 @@
 | 외부 서비스 | 사용 서비스와 월 비용 상한 | Phase 1 앱 런타임 외부 서비스 없음 (에셋 생성은 개발자가 AI 이미지 도구로 수동 작업) |
 | 품질 | 테스트 수준 (L0~L3) | L1 |
 | 품질 | 린터 / 포매터 | flutter_lints 6 (템플릿 기본) / `dart format` |
-| 코드 규칙 | 에러 처리 / 로깅 / 주석 언어 | 미정 |
+| 코드 규칙 | 에러 처리 / 로깅 / 주석 언어 | 규칙 위반은 sealed 도메인 예외(`lib/core/error/`)로 던지고 화면에서 한국어로 안내 / `debugPrint`만, 개인 데이터(할일 제목 등)는 로그 금지 / 한국어 주석 |
 | Git | 브랜치 전략 / 커밋 형식 | main + feature/*, Conventional Commits |
 | 배포 | 환경 구분 / CI / 배포 대상 | 미정 |
 
@@ -35,7 +35,7 @@
 | 토스트·알림 | 미정 | | |
 | 모달·다이얼로그 | 미정 | | |
 | 폼 검증 | 미정 | | |
-| 날짜·시간 처리 | 미정 | | |
+| 날짜·시간 처리 | 내장 DateTime + `lib/core/date/`(날짜 키 변환, 현재 시각 Provider). 한국어 날짜 표시가 필요해지면 intl 검토 | 필요 기능이 고정 형식 문자열과 테스트용 시각 고정뿐, 시각 읽는 곳이 서비스 한 곳 | 2026-11-25 |
 | 아이콘 | 미정 | | |
 | HTTP 클라이언트 | 미정 | | |
 | 펫 그래픽 | 개발 시점 AI 생성(ChatGPT 이미지) 1×4 표정 시트 + 코드 모션, `docs/ART_PROMPTS.md` | MysteryTalk에서 같은 방식 사용, 직접 도트 제작보다 단순 | 2026-11-25 |
@@ -53,3 +53,5 @@
 - 2026-11-25 | 패키지 추가(버전 고정): flutter_riverpod 3.5.0, drift 2.35.4, drift_flutter 0.3.1, dev: drift_dev 2.35.3, build_runner 2.15.1. Riverpod 코드 생성은 쓰지 않음 | 사용자 승인, pub.dev·dry-run으로 호환 확인 | pubspec.yaml, pubspec.lock
 - 2026-11-25 | DB 스키마 v1 (todos·checklist_items·todo_occurrences·point_history·pets·user_profile). 취소는 회차 행을 남기고 status만 변경, 날짜는 현지 'yyyy-MM-dd' 문자열 | 사용자 승인 | lib/core/db/, drift_schemas/
 - 2026-11-25 | 온보딩은 첫 할일 등록 때 펫·할일을 한 번에 저장하고 완료 처리, 첫 완료 보상 안내는 포인트 이력이 비었을 때 1회 | 같은 종 중복 저장 방지 (사용자 승인) | PRD 7장 수정 제안
+- 2026-11-25 | 일일 상한은 완료 지급·취소 차감만 합산(지출 제외), 하위항목 0개 체크리스트는 완료 불가 | PRD 3.2 해석 (사용자 확정) | lib/features/points/domain/point_rules.dart
+- 2026-11-25 | 에러 처리 sealed 도메인 예외, 로깅 debugPrint만, 한국어 주석, 날짜는 내장 DateTime + 현재 시각 Provider | 포인트 서비스 착수 전 결정 | docs/decisions.md
