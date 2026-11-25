@@ -1,4 +1,4 @@
-# todolist
+# todopet
 
 Flutter 기반 투두리스트 + 도트 펫 육성 앱의 기획 뼈대입니다.
 
