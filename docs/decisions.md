@@ -49,3 +49,4 @@
 - 2026-11-25 | 모듈 db·mobile 적용, llm·game-mod 파일 삭제, 개발 OS Windows/PowerShell 확정 | 구조 정리 | CLAUDE.md, docs/modules/, .env.example
 - 2026-11-25 | PRD v0.3 e2e 재검토: 체크리스트는 전체 완료 시만 지급, 시작 종 추가 입양 허용(상점 탭 유지), 기분은 표정에만 연결, 종·먹이·카테고리는 코드 상수, 날짜 넘김은 앱 열 때 일괄 처리, 취소 차감은 지급 당시 금액·완료된 할일 수정 불가·오늘/이월만 완료·배고픔 100이면 구매 불가·최저 먹이 5P 이하 | 과설계 제거·누락 보완 | docs/PRD.md(사용자가 직접 복사해 반영), CLAUDE.md, docs/ART_PROMPTS.md
 - 2026-11-25 | Flutter 프로젝트 생성: Flutter 3.44.8 고정, 패키지명 com.justdoit.todopet, Dart 패키지 todo_pet, Android 먼저(ios/ 생성만), 기능별 폴더, flutter_lints | 사용자 선택 | docs/decisions.md, CLAUDE.md, pubspec.yaml
+- 2026-11-25 | 패키지 추가(버전 고정): flutter_riverpod 3.5.0, drift 2.35.4, drift_flutter 0.3.1, dev: drift_dev 2.35.3, build_runner 2.15.1. Riverpod 코드 생성은 쓰지 않음 | 사용자 승인, pub.dev·dry-run으로 호환 확인 | pubspec.yaml, pubspec.lock

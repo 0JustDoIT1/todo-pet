@@ -126,7 +126,8 @@ PRD에서 절대 깨지면 안 되는 규칙. 위반하는 코드는 작성하�
 ## 고정 제약
 - 쓰지 말 것: 펫 애니메이션용 게임 엔진·스프라이트 패키지 (Flutter 기본 위젯·Transform으로 처리), 런타임 AI/이미지 생성 API
 - 반드시 따를 것:
-  - 상태관리 Riverpod, DB Drift(SQLite)
+  - 상태관리 Riverpod(flutter_riverpod, 코드 생성 없이 Provider 직접 작성), DB Drift(SQLite)
+  - Drift 코드 생성: `dart run build_runner build`
   - 종·먹이·카테고리는 코드 상수로 둔다. DB에는 사용자 데이터만 둔다
   - 픽셀 그림은 `FilterQuality.none`으로 그린다
   - 새 그림은 `docs/ART_PROMPTS.md` 규격을 따르고 `ASSETS.md`에 출처를 적는다
