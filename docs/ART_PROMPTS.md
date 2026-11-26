@@ -97,18 +97,20 @@ The pet: the same bunny as the reference image, grown a little bigger and more m
 
 ## 3. 먹이 아이콘 3장
 
+고양이·강아지·토끼 모두에게 주는 먹이라 특정 동물을 떠올리게 하는 모양(뼈다귀, 생선, 당근 등)은 쓰지 않는다.
+
 ### [ ] 기본 사료 — 원본 파일 이름 `food_basic.png`
 ```
 Pixel art food item icon, 16-bit style, clean dark outline, limited palette, single item centered, square image,
 readable at 32x32 pixels, fully transparent background, no text, no logos, no watermark.
-Item: a small bowl of round brown pet kibble.
+Item: a small round pet bowl filled with colorful round food pellets (light brown, green and orange), a generic pet food that suits any small animal.
 ```
 
 ### [ ] 간식 — 원본 파일 이름 `food_snack.png`
 ```
 Pixel art food item icon, 16-bit style, clean dark outline, limited palette, single item centered, square image,
 readable at 32x32 pixels, fully transparent background, no text, no logos, no watermark.
-Item: a bone-shaped cookie treat.
+Item: a heart-shaped cookie with pink icing, a generic treat that suits any small animal (not a bone, not a fish).
 ```
 
 ### [ ] 특별식 — 원본 파일 이름 `food_special.png`
