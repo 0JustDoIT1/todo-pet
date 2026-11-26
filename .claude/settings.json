@@ -54,8 +54,6 @@
       "Read(./**/secrets/**)",
       "Read(./**/credentials*.json)",
       "Read(./**/service-account*.json)",
-      "Edit(./docs/PRD.md)",
-      "Write(./docs/PRD.md)",
       "Bash(git push --force*)",
       "Bash(git push -f*)",
       "Bash(git push * --force*)",
@@ -80,6 +78,8 @@
       "Bash(type *.env*)"
     ],
     "ask": [
+      "Edit(./docs/PRD.md)",
+      "Write(./docs/PRD.md)",
       "Bash(git commit*)",
       "Bash(git push*)",
       "Bash(git merge*)",
