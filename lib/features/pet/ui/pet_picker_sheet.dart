@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/error/app_exception.dart';
 import '../domain/pet_rules.dart';
 import '../domain/species.dart';
+import 'pet_sprite.dart';
 
 /// 펫 고르기 결과.
 typedef PetChoice = ({String speciesId, String name});
@@ -89,7 +90,7 @@ class _PetPickerFormState extends State<PetPickerForm> {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Column(
                     children: [
-                      Text(s.placeholder, style: const TextStyle(fontSize: 40)),
+                      PetSprite(speciesId: s.id, stage: 1, size: 56),
                       Text(s.name),
                     ],
                   ),

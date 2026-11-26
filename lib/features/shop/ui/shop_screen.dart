@@ -10,6 +10,7 @@ import '../../pet/domain/species.dart';
 import '../../pet/ui/pet_actions.dart';
 import '../../pet/ui/pet_picker_sheet.dart';
 import '../../pet/ui/pet_providers.dart';
+import '../../pet/ui/pet_sprite.dart';
 import '../../todo/ui/todo_providers.dart';
 
 /// 상점 (PRD 7장): 먹이 구매(바로 급여), 시작 종 입양.
@@ -54,7 +55,7 @@ class ShopScreen extends ConsumerWidget {
           ),
           for (final f in foods)
             ListTile(
-              leading: const Icon(Icons.restaurant),
+              leading: FoodIcon(f),
               title: Text(f.name),
               subtitle: Text('배고픔 +${f.hunger} · 기분 +${f.mood}'),
               trailing: FilledButton.tonal(
@@ -70,10 +71,7 @@ class ShopScreen extends ConsumerWidget {
             _Header('입양', '새 펫은 1단계부터 시작해요. 함께할 펫은 설정에서 바꿀 수 있어요.'),
             for (final s in adoptable)
               ListTile(
-                leading: Text(
-                  s.placeholder,
-                  style: const TextStyle(fontSize: 32),
-                ),
+                leading: PetSprite(speciesId: s.id, stage: 1, size: 48),
                 title: Text(s.name),
                 trailing: FilledButton.tonal(
                   onPressed: balance < PetRules.adoptionPrice

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../domain/foods.dart';
+import 'pet_sprite.dart';
 
 /// 먹이 고르기 (기획서 5.8). 고른 먹이를 돌려준다. 구매·급여는 호출하는 쪽에서 한다.
 Future<FoodItem?> showFeedSheet(
@@ -19,7 +20,7 @@ Future<FoodItem?> showFeedSheet(
         ),
         for (final f in foods)
           ListTile(
-            leading: const Icon(Icons.restaurant),
+            leading: FoodIcon(f),
             title: Text(f.name),
             subtitle: Text('배고픔 +${f.hunger} · 기분 +${f.mood}'),
             trailing: Text('${f.price}P'),

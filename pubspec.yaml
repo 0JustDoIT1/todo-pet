@@ -64,6 +64,13 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  # 펫 표정 시트(256×64)와 먹이 아이콘(32×32). 규격은 docs/ART_PROMPTS.md, 출처는 ASSETS.md.
+  assets:
+    - assets/pets/cat/
+    - assets/pets/dog/
+    - assets/pets/rabbit/
+    - assets/food/
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/error/app_exception.dart';
 import '../../pet/domain/species.dart';
 import '../../pet/ui/pet_picker_sheet.dart';
+import '../../pet/ui/pet_sprite.dart';
 import '../data/onboarding_service.dart';
 
 /// 온보딩 (PRD F6, 기획서 5.9): 소개 → 펫 고르기·이름 → 첫 할일 1~3개.
@@ -84,10 +85,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       spacing: 20,
       children: [
         const SizedBox(height: 48),
-        const Text(
-          '🐱 🐶 🐰',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 56),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (final s in starterSpecies)
+              PetSprite(
+                speciesId: s.id,
+                stage: 1,
+                cell: SpriteCell.happy,
+                size: 88,
+              ),
+          ],
         ),
         Text(
           '할일을 끝내면 포인트가 쌓이고,\n그 포인트로 펫을 돌봐요',
@@ -110,15 +118,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Widget _firstTodos(BuildContext context) {
     final theme = Theme.of(context);
     final pet = _pet!;
-    final species = speciesById(pet.speciesId);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 16,
       children: [
         // 이름 뒤 조사(와/과)가 받침에 따라 달라 이름은 따로 줄에 둔다.
-        Text(
-          '${species?.placeholder ?? ''} ${pet.name}',
-          style: theme.textTheme.titleMedium,
+        Row(
+          spacing: 8,
+          children: [
+            PetSprite(speciesId: pet.speciesId, stage: 1, size: 48),
+            Text(pet.name, style: theme.textTheme.titleMedium),
+          ],
         ),
         Text('오늘 할일을 적어 주세요', style: theme.textTheme.titleLarge),
         const Text('하나만 적어도 괜찮아요. 완료하면 10P를 받아요.'),

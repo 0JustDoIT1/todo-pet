@@ -7,6 +7,7 @@ import '../../pet/data/pet_service.dart';
 import '../../pet/domain/pet_rules.dart';
 import '../../pet/domain/species.dart';
 import '../../pet/ui/pet_providers.dart';
+import '../../pet/ui/pet_sprite.dart';
 
 /// 설정 (PRD 7장): 활성 펫 교체·이름 변경, 오픈소스 라이선스·에셋 출처.
 class SettingsScreen extends ConsumerWidget {
@@ -26,9 +27,10 @@ class SettingsScreen extends ConsumerWidget {
           if (pets.isEmpty) const ListTile(title: Text('아직 함께하는 펫이 없어요')),
           for (final pet in pets)
             ListTile(
-              leading: Text(
-                speciesById(pet.speciesId)?.placeholder ?? '❓',
-                style: const TextStyle(fontSize: 32),
+              leading: PetSprite(
+                speciesId: pet.speciesId,
+                stage: pet.stage,
+                size: 48,
               ),
               title: Text(pet.name),
               subtitle: Text(
@@ -106,14 +108,14 @@ class SettingsScreen extends ConsumerWidget {
       ..showSnackBar(SnackBar(content: Text(message)));
   }
 
-  /// 그림 출처. 그림을 넣으면 ASSETS.md와 함께 갱신한다.
+  /// 그림 출처. ASSETS.md와 같은 내용을 유지한다.
   void _showAssetSources(BuildContext context) => showDialog<void>(
     context: context,
     builder: (context) => AlertDialog(
       title: const Text('그림 출처'),
       content: const Text(
-        '펫·먹이 그림은 AI 이미지 생성 도구로 만들 예정이에요.\n'
-        '지금은 시스템 이모지로 대신 보여주고 있어요.',
+        '펫·먹이 그림과 앱 아이콘은 ChatGPT 이미지 생성(OpenAI)으로 만들고 '
+        '크기와 투명 배경을 다듬어 넣었어요 (2026년 11월).',
       ),
       actions: [
         TextButton(
