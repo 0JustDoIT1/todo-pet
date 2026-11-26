@@ -9,6 +9,7 @@
 | `assets/pets/rabbit/stage1.png`, `stage2.png` | 같음 | 같음 | 같음 |
 | `assets/food/basic.png`, `snack.png`, `special.png` | ChatGPT 이미지 생성(OpenAI), 2026-11 | 그림 영역 자르기 → 정사각형 맞춤 → 32×32 축소 → 투명도 이진화 | 같음 |
 | `assets/icon/app_icon.png`, Android `mipmap-*/ic_launcher.png`, iOS `AppIcon.appiconset/*.png` | ChatGPT 이미지 생성(OpenAI), 2026-11 | 1024×1024로 축소, 플랫폼별 기존 크기로 다시 저장(투명도 없음) | 같음 |
+| Android `mipmap-*/ic_launcher_foreground.png` (적응형 아이콘 앞쪽 그림) | 위 앱 아이콘과 같음 | 108dp 캔버스의 안전 영역(72dp)에 아이콘 전체를 넣음. 배경색 `#FC5D01`은 `values/ic_launcher_background.xml` | 같음 |
 
 - 원본은 저장소 밖(사용자 기획 폴더)에 있다. 보정은 일회성 Pillow 스크립트로 했고, 같은 그림을 다시 넣을 때는 위 보정 순서를 따른다.
 - 특별식 그림에는 호랑가시나무(크리스마스) 장식이 있다. 계절감이 문제되면 프롬프트에 `no seasonal decorations`를 넣어 다시 만든다.
