@@ -27,7 +27,7 @@ Claude가 하는 일: 투명 배경 정리 → 칸 나누기 → nearest-neighbo
 
 ## 2. 펫 6장 (고양이·강아지·토끼 × 1·2단계)
 
-### [ ] 고양이 1단계 — 원본 파일 이름 `cat_stage1.png`
+### [x] 고양이 1단계 — 원본 파일 이름 `cat_stage1.png`
 ```
 Cute pixel art virtual pet sprite sheet, 16-bit style, chibi round body, front view facing the viewer,
 clean dark outline, limited palette (about 16 colors), soft shading, readable at 64x64 pixels,
@@ -38,7 +38,7 @@ The same character in every cell; only the face and posture change.
 The pet: a tiny round baby kitten, orange tabby with a cream belly, big eyes, short stubby tail.
 ```
 
-### [ ] 고양이 2단계 — 원본 파일 이름 `cat_stage2.png` (1단계 그림을 참고 이미지로 함께 올림)
+### [x] 고양이 2단계 — 원본 파일 이름 `cat_stage2.png` (1단계 그림을 참고 이미지로 함께 올림)
 ```
 Cute pixel art virtual pet sprite sheet, 16-bit style, chibi round body, front view facing the viewer,
 clean dark outline, limited palette (about 16 colors), soft shading, readable at 64x64 pixels,
@@ -49,7 +49,7 @@ The same character in every cell; only the face and posture change.
 The pet: the same kitten as the reference image, grown a little bigger and more mature, longer tail, small golden bell collar. Keep the same colors and face.
 ```
 
-### [ ] 강아지 1단계 — 원본 파일 이름 `dog_stage1.png`
+### [x] 강아지 1단계 — 원본 파일 이름 `dog_stage1.png`
 ```
 Cute pixel art virtual pet sprite sheet, 16-bit style, chibi round body, front view facing the viewer,
 clean dark outline, limited palette (about 16 colors), soft shading, readable at 64x64 pixels,
@@ -60,7 +60,7 @@ The same character in every cell; only the face and posture change.
 The pet: a tiny round baby puppy, light brown fur with one darker brown ear, floppy ears, big eyes.
 ```
 
-### [ ] 강아지 2단계 — 원본 파일 이름 `dog_stage2.png` (1단계 그림을 참고 이미지로 함께 올림)
+### [x] 강아지 2단계 — 원본 파일 이름 `dog_stage2.png` (1단계 그림을 참고 이미지로 함께 올림)
 ```
 Cute pixel art virtual pet sprite sheet, 16-bit style, chibi round body, front view facing the viewer,
 clean dark outline, limited palette (about 16 colors), soft shading, readable at 64x64 pixels,
@@ -71,7 +71,7 @@ The same character in every cell; only the face and posture change.
 The pet: the same puppy as the reference image, grown a little bigger and more mature, wagging tail, small red scarf. Keep the same colors and face.
 ```
 
-### [ ] 토끼 1단계 — 원본 파일 이름 `rabbit_stage1.png`
+### [x] 토끼 1단계 — 원본 파일 이름 `rabbit_stage1.png`
 ```
 Cute pixel art virtual pet sprite sheet, 16-bit style, chibi round body, front view facing the viewer,
 clean dark outline, limited palette (about 16 colors), soft shading, readable at 64x64 pixels,
@@ -82,7 +82,7 @@ The same character in every cell; only the face and posture change.
 The pet: a tiny round baby bunny, white fur with pink inner ears, short ears, fluffy round tail.
 ```
 
-### [ ] 토끼 2단계 — 원본 파일 이름 `rabbit_stage2.png` (1단계 그림을 참고 이미지로 함께 올림)
+### [x] 토끼 2단계 — 원본 파일 이름 `rabbit_stage2.png` (1단계 그림을 참고 이미지로 함께 올림)
 ```
 Cute pixel art virtual pet sprite sheet, 16-bit style, chibi round body, front view facing the viewer,
 clean dark outline, limited palette (about 16 colors), soft shading, readable at 64x64 pixels,
@@ -99,21 +99,21 @@ The pet: the same bunny as the reference image, grown a little bigger and more m
 
 고양이·강아지·토끼 모두에게 주는 먹이라 특정 동물을 떠올리게 하는 모양(뼈다귀, 생선, 당근 등)은 쓰지 않는다.
 
-### [ ] 기본 사료 — 원본 파일 이름 `food_basic.png`
+### [x] 기본 사료 — 원본 파일 이름 `food_basic.png`
 ```
 Pixel art food item icon, 16-bit style, clean dark outline, limited palette, single item centered, square image,
 readable at 32x32 pixels, fully transparent background, no text, no logos, no watermark.
 Item: a small round pet bowl filled with colorful round food pellets (light brown, green and orange), a generic pet food that suits any small animal.
 ```
 
-### [ ] 간식 — 원본 파일 이름 `food_snack.png`
+### [x] 간식 — 원본 파일 이름 `food_snack.png`
 ```
 Pixel art food item icon, 16-bit style, clean dark outline, limited palette, single item centered, square image,
 readable at 32x32 pixels, fully transparent background, no text, no logos, no watermark.
 Item: a heart-shaped cookie with pink icing, a generic treat that suits any small animal (not a bone, not a fish).
 ```
 
-### [ ] 특별식 — 원본 파일 이름 `food_special.png`
+### [x] 특별식 — 원본 파일 이름 `food_special.png`
 ```
 Pixel art food item icon, 16-bit style, clean dark outline, limited palette, single item centered, square image,
 readable at 32x32 pixels, fully transparent background, no text, no logos, no watermark.
@@ -124,7 +124,7 @@ Item: a festive plate with a small strawberry cake and a little star sparkle.
 
 펫 1단계 그림을 모두 만든 뒤에 만든다. 고양이 1단계 그림을 참고 이미지로 함께 올린다(다른 종으로 바꿔도 된다).
 
-### [ ] 앱 아이콘 — 원본 파일 이름 `app_icon.png`
+### [x] 앱 아이콘 — 원본 파일 이름 `app_icon.png`
 ```
 App icon, 1024x1024, square, pixel art 16-bit style, clean dark outline, limited palette.
 The kitten from the reference image, only its head and front paws, peeking up from behind a large white checkmark.

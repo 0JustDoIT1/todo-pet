@@ -111,8 +111,9 @@ drift_schemas/: 버전별 스키마 기록 (build.yaml에서 설정)
 lib/features/<home|todo|points|pet|shop|onboarding|settings>/{domain,data,ui}: 기능별 코드. domain은 순수 Dart
 test/: lib 구조를 따라간다
 android/, ios/: 플랫폼 폴더 (패키지명 com.justdoit.todopet)
-assets/pets/<species>/stage<N>.png: 펫 표정 시트 256×64 (예정)
-assets/food/<id>.png: 먹이 아이콘 32×32 (예정)
+assets/pets/<species>/stage<N>.png: 펫 표정 시트 256×64 (lib/features/pet/ui/pet_sprite.dart가 칸을 잘라 보여줌)
+assets/food/<id>.png: 먹이 아이콘 32×32
+assets/icon/app_icon.png: 앱 아이콘 원본 1024×1024 (플랫폼 아이콘 파일은 android/·ios/에 크기별로 저장)
 docs/: 기획(PRD)·결정 기록·그림 프롬프트(ART_PROMPTS.md)·모듈 규칙
 ASSETS.md: 에셋 출처·라이선스
 .claude/: 개발 명령 템플릿·권한 설정
