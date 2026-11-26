@@ -75,3 +75,4 @@
 - 2026-11-26 | 쓰지 않는 템플릿 의존성 cupertino_icons 제거 | 코드에서 사용 없음 (사용자 승인) | pubspec.yaml, pubspec.lock
 - 2026-11-26 | PRD 수정 규칙 변경: Claude는 사용자 승인을 받은 경우에만 PRD를 수정(설정 deny → ask, 수정마다 확인 창). 공통 구역 1·8장은 이 저장소에서만 변경 | 사용자 요청 | .claude/settings.json, CLAUDE.md, .claude/commands/decide.md, docs/PRD.md
 - 2026-11-26 | PRD v0.4: PRD 반영 대기 7건 반영(빠른 등록 난이도 중, 애정도 50 성장, 온보딩 저장 시점, 버전·플랫폼, 미확정·검증 상태 정리) | 사용자 승인 | docs/PRD.md
+- 2026-11-26 | 템플릿 공통 구역 v1.2 적용(PRD 수정 규칙을 템플릿에도 반영해 버전을 올림). 이 저장소의 공통 구역·decide.md·settings.json이 템플릿과 같아짐 | 사용자 승인 | CLAUDE.md
