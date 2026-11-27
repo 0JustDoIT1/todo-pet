@@ -86,7 +86,7 @@
 # 프로젝트 구역
 
 ## 맥락
-- 한 줄 설명: 할일 완료 보상으로 도트 펫을 돌보는 Flutter 앱
+- 한 줄 설명: 할일 완료 보상으로 2D 일러스트 펫을 돌보는 Flutter 앱
 - 대상 사용자: 할일 관리와 가벼운 펫 육성을 함께 원하는 사용자
 - 핵심 기능: 할일 관리, 완료 포인트, 펫 돌보기, 먹이 구매, 온보딩
 - 상세: `docs/PRD.md`
@@ -111,8 +111,8 @@ drift_schemas/: 버전별 스키마 기록 (build.yaml에서 설정)
 lib/features/<home|todo|points|pet|shop|onboarding|settings>/{domain,data,ui}: 기능별 코드. domain은 순수 Dart
 test/: lib 구조를 따라간다
 android/, ios/: 플랫폼 폴더 (패키지명 com.justdoit.todopet)
-assets/pets/<species>/stage<N>.png: 펫 표정 시트 256×64 (lib/features/pet/ui/pet_sprite.dart가 칸을 잘라 보여줌)
-assets/food/<id>.png: 먹이 아이콘 32×32
+assets/pets/<species>/stage<N>.png: 펫 표정 시트 1×4 (일러스트 칸 512×512, 교체 전 도트는 64×64. lib/features/pet/ui/pet_sprite.dart가 칸을 잘라 보여줌)
+assets/food/<id>.png: 먹이 아이콘 (일러스트 256×256, 교체 전 도트는 32×32)
 assets/icon/app_icon.png: 앱 아이콘 원본 1024×1024 (플랫폼 아이콘 파일은 android/·ios/에 크기별로 저장)
 docs/: 기획(PRD)·결정 기록·그림 프롬프트(ART_PROMPTS.md)·모듈 규칙
 ASSETS.md: 에셋 출처·라이선스
@@ -135,7 +135,7 @@ PRD에서 절대 깨지면 안 되는 규칙. 위반하는 코드는 작성하�
   - Drift 코드 생성: `dart run build_runner build`
   - Git: 작업마다 `feat/`·`fix/`·`docs/`·`chore/` 등 브랜치를 main에서 새로 만들고, 끝나면 main에 `git merge --ff-only`로 합친다. 커밋 메시지는 한국어 `종류: 요약`, Co-Authored-By 트레일러는 넣지 않는다
   - 종·먹이·카테고리는 코드 상수로 둔다. DB에는 사용자 데이터만 둔다
-  - 픽셀 그림은 `FilterQuality.none`으로 그린다
+  - 그림은 2D 일러스트(투명 PNG)이며 부드러운 보간(`FilterQuality.medium`)으로 그린다. 교체 전 남은 도트 그림은 `FilterQuality.none`
   - 새 그림은 `docs/ART_PROMPTS.md` 규격을 따르고 `ASSETS.md`에 출처를 적는다
 
 ## 적용 모듈
