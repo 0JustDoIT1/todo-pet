@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/ui/app_theme.dart';
 import 'core/ui/day_change_watcher.dart';
 import 'core/ui/main_shell.dart';
 import 'features/onboarding/data/onboarding_service.dart';
@@ -14,7 +15,7 @@ class TodoPetApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '투두펫',
-      theme: ThemeData(colorSchemeSeed: Colors.orange),
+      theme: buildAppTheme(),
       locale: const Locale('ko'),
       supportedLocales: const [Locale('ko')],
       localizationsDelegates: GlobalMaterialLocalizations.delegates,

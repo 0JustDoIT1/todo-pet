@@ -60,12 +60,20 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # 펫 표정 시트(256×64)와 먹이 아이콘(32×32). 규격은 docs/ART_PROMPTS.md, 출처는 ASSETS.md.
+  # 펫 표정 시트와 먹이 아이콘. 규격은 docs/ART_PROMPTS.md, 출처는 ASSETS.md.
+  # assets/fonts/OFL.txt는 글꼴 라이선스(앱 라이선스 화면에 표시).
   assets:
     - assets/pets/cat/
     - assets/pets/dog/
     - assets/pets/rabbit/
     - assets/food/
+    - assets/fonts/OFL.txt
+
+  # 제목·버튼·숫자용 둥근 글꼴 (OFL). 본문은 기본 글꼴.
+  fonts:
+    - family: Jua
+      fonts:
+        - asset: assets/fonts/Jua-Regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
